@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>UV99 Glazing | The Rays Stop Here</title>
+<meta name="description" content="UV99 Glazing — advanced UV-defense glazing that blocks up to 99% of harmful UV-A and UV-B rays. UV99 and UV PRO series.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0B0710;
+    --void-2:#150C1E;
+    --violet:#9B2BAE;
+    --violet-deep:#3E0F49;
+    --violet-glow:#E14FFF;
+    --paper:#F8F4FA;
+    --paper-2:#F0E9F3;
+    --ink:#160F1C;
+    --ink-soft:#6E6479;
+    --line:rgba(155,43,174,0.16);
+    --line-strong:rgba(155,43,174,0.32);
+    --uv:#FF3D5A;
+    --safe-top:env(safe-area-inset-top,0px);
+    --safe-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:-0.01em;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{max-width:100%;display:block;}
+  :focus-visible{outline:2px solid var(--violet-glow);outline-offset:3px;}
+  .wrap{max-width:520px;margin:0 auto;padding:0 22px;}
+  @media (min-width:640px){ .wrap{max-width:640px;} }
+
+  /* Scroll reveal */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1;transform:none;transition:none;} }
+
+  /* ---------------- Sticky bottom bar ---------------- */
+  .callbar{
+    position:fixed;left:0;right:0;bottom:0;z-index:80;
+    padding:14px 0 calc(14px + var(--safe-bottom));
+    background:linear-gradient(180deg, transparent, rgba(248,244,250,0.97) 32%, var(--paper) 100%);
+  }
+  .callbar-inner{max-width:520px;margin:0 auto;padding:0 22px;display:flex;gap:10px;}
+  .btn{
+    flex:1;display:flex;align-items:center;justify-content:center;gap:8px;
+    font-family:'Manrope',sans-serif;font-weight:700;font-size:13.5px;
+    padding:14px 16px;border-radius:3px;
+    transition:transform .15s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .btn-primary{background:var(--violet);color:#fff;border:1px solid var(--violet);}
+  .btn-primary:hover{background:var(--violet-glow);box-shadow:0 10px 26px -8px rgba(225,79,255,0.55);}
+  .btn-ghost{background:transparent;border:1px solid var(--line-strong);color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--violet);}
+  .btn:active{transform:scale(0.97);}
+
+  /* ================= HERO ================= */
+  .hero{
+    position:relative;
+    min-height:min(100svh, 760px);
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;inset:0;z-index:0;
+    background:url('assets/hero.png.png') center 20%/cover no-repeat;
+  }
+  .hero-bg::after{
+    content:"";position:absolute;inset:0;
+    background:
+      linear-gradient(180deg, rgba(11,7,16,0.55) 0%, rgba(11,7,16,0.2) 30%, rgba(11,7,16,0.15) 50%, rgba(11,7,16,0.55) 75%, rgba(11,7,16,0.95) 100%),
+      radial-gradient(ellipse 600px 400px at 50% 20%, rgba(155,43,174,0.25), transparent 70%);
+  }
+
+  /* Split comparison overlay — left: without UV99, right: with UV99 */
+  .hero-split{position:absolute;inset:0;z-index:1;pointer-events:none;}
+  .hero-split .line{
+    position:absolute;top:0;bottom:0;left:50%;width:1px;
+    background:linear-gradient(180deg, transparent, rgba(255,255,255,0.45) 18%, rgba(225,79,255,0.65) 50%, rgba(255,255,255,0.45) 82%, transparent);
+    transform:translateX(-50%) scaleY(0);transform-origin:top;
+    animation:splitDraw 1s cubic-bezier(.16,1,.3,1) .35s forwards;
+  }
+  @keyframes splitDraw{to{transform:translateX(-50%) scaleY(1);}}
+  .hero-tag{
+    position:absolute;top:18%;transform:translateX(-50%);
+    font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;
+    letter-spacing:0.14em;text-transform:uppercase;white-space:nowrap;
+    padding:6px 12px;border-radius:20px;
+    background:rgba(11,7,16,0.42);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,0.16);
+    opacity:0;animation:tagIn .6s ease .65s forwards;
+  }
+  .hero-tag .dot{display:inline-block;width:5px;height:5px;border-radius:50%;margin-right:7px;vertical-align:middle;}
+  .hero-tag.left{left:25%;color:rgba(255,255,255,0.85);border-color:rgba(255,61,90,0.4);}
+  .hero-tag.left .dot{background:var(--uv);box-shadow:0 0 8px 1px var(--uv);}
+  .hero-tag.right{left:75%;color:var(--violet-glow);border-color:rgba(225,79,255,0.45);box-shadow:0 0 22px -6px rgba(225,79,255,0.6);}
+  .hero-tag.right .dot{background:var(--violet-glow);box-shadow:0 0 8px 1px var(--violet-glow);}
+  @keyframes tagIn{to{opacity:1;}}
+  @media (prefers-reduced-motion: reduce){
+    .hero-split .line{animation:none;transform:translateX(-50%) scaleY(1);}
+    .hero-tag{animation:none;opacity:1;}
+  }
+  .hero-top{
+    position:relative;z-index:2;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:calc(18px + var(--safe-top)) 22px 0;
+  }
+  .wordmark{display:flex;align-items:center;font-family:'Unbounded',sans-serif;font-weight:800;font-size:19px;letter-spacing:-0.02em;color:#fff;}
+  .logo-img{height:28px;width:auto;}
+  .pill{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;
+    border:1px solid rgba(255,255,255,0.24);background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    padding:6px 10px;border-radius:20px;display:flex;align-items:center;gap:6px;
+  }
+  .pill::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--violet-glow);box-shadow:0 0 8px 1px var(--violet-glow);}
+
+  .hero-content{
+    position:relative;z-index:2;
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+    text-align:center;padding:40px 22px 4px;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--violet-glow);margin-bottom:16px;
+  }
+  .hero h1{
+    font-size:clamp(34px,10vw,52px);
+    line-height:1.05;
+    margin-bottom:18px;
+    text-shadow:0 2px 30px rgba(0,0,0,0.5);
+  }
+  .hero h1 .accent{color:var(--violet-glow);}
+  .hero-sub{
+    color:rgba(255,255,255,0.72);font-size:15px;max-width:400px;
+    margin:0 auto 32px;line-height:1.6;
+    text-shadow:0 1px 10px rgba(0,0,0,0.4);
+  }
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+  .btn{
+    font-family:'Manrope',sans-serif;font-weight:700;font-size:14px;
+    padding:14px 28px;border-radius:10px;border:none;cursor:pointer;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{
+    background:var(--violet);color:#fff;
+    box-shadow:0 4px 20px rgba(155,43,174,0.4);
+  }
+  .btn-primary:hover{box-shadow:0 6px 28px rgba(155,43,174,0.55);}
+  .btn-outline{
+    background:rgba(255,255,255,0.08);color:#fff;
+    border:1px solid rgba(255,255,255,0.22);
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  }
+  .btn-outline:hover{background:rgba(255,255,255,0.14);}
+
+  .scroll-cue{
+    position:relative;z-index:2;
+    display:inline-flex;flex-direction:column;align-items:center;gap:6px;
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;
+    text-transform:uppercase;color:rgba(255,255,255,0.4);
+    padding-bottom:26px;
+  }
+  .scroll-cue .line{width:1px;height:22px;background:linear-gradient(180deg, rgba(255,255,255,0.6), transparent);animation:cue 1.8s ease-in-out infinite;}
+  @keyframes cue{ 0%{transform:scaleY(0.3);transform-origin:top;} 50%{transform:scaleY(1);transform-origin:top;} 100%{transform:scaleY(0.3);transform-origin:bottom;} }
+  @media (prefers-reduced-motion: reduce){ .scroll-cue .line{animation:none;} }
+
+  @media (max-width:640px){
+    /* Mobile: show the full comparison image uncropped, copy on a panel below */
+    .hero{min-height:0;}
+    .hero-bg{
+      position:relative;inset:auto;width:100%;
+      aspect-ratio:1672 / 941;
+      background-position:center;
+      background-size:cover;
+      background-color:var(--void);
+    }
+    .hero-bg::after{
+      background:linear-gradient(180deg, rgba(11,7,16,0.6) 0%, rgba(11,7,16,0.12) 24%, transparent 46%);
+    }
+    .hero-split{
+      top:0;left:0;right:0;bottom:auto;
+      aspect-ratio:1672 / 941;
+    }
+    .hero-tag{top:auto;bottom:7%;font-size:8.5px;letter-spacing:0.1em;padding:5px 9px;}
+    .hero-tag .dot{width:4px;height:4px;margin-right:5px;}
+    .hero-top{position:absolute;top:0;left:0;right:0;}
+    .hero-content{
+      position:relative;flex:none;z-index:2;
+      background:var(--void);
+      justify-content:flex-start;
+      padding:26px 20px 34px;
+    }
+    .hero-content .eyebrow{font-size:10px;margin-bottom:10px;}
+    .hero h1{font-size:28px;margin-bottom:10px;}
+    .hero-sub{font-size:13px;margin-bottom:0;max-width:320px;}
+    .hero-cta{display:none;}
+    .scroll-cue{display:none;}
+  }
+
+  /* ================= SECTION SHELL ================= */
+  .section{padding:64px 0;}
+  .section-tight{padding:44px 0;}
+  .eyebrow-dark{
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;
+    color:var(--violet);margin-bottom:12px;display:flex;align-items:center;gap:8px;
+  }
+  .eyebrow-dark::before{content:"";width:16px;height:1px;background:var(--violet);}
+  .section h2{font-size:26px;line-height:1.15;margin-bottom:12px;}
+  .section p.lead{color:var(--ink-soft);font-size:14.5px;max-width:420px;}
+  .divider{height:1px;background:var(--line);border:none;}
+
+  /* ================= PROBLEM (illustration) ================= */
+  .problem-visual{
+    margin:28px 0 4px;
+    border:1px solid var(--line-strong);
+    border-radius:14px;
+    padding:24px;
+    background:linear-gradient(160deg, #fff, var(--paper-2));
+    overflow:hidden;
+  }
+  .fade-strip{display:flex;align-items:flex-end;gap:6px;height:70px;margin-bottom:14px;}
+  .fade-strip .bar{flex:1;border-radius:3px 3px 0 0;background:linear-gradient(180deg, var(--uv), #ffb199);}
+  .fade-strip .bar:nth-child(1){height:20%;opacity:0.35;}
+  .fade-strip .bar:nth-child(2){height:38%;opacity:0.5;}
+  .fade-strip .bar:nth-child(3){height:58%;opacity:0.65;}
+  .fade-strip .bar:nth-child(4){height:78%;opacity:0.8;}
+  .fade-strip .bar:nth-child(5){height:100%;opacity:1;}
+  .problem-visual .caption{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ink-soft);display:flex;justify-content:space-between;}
+
+  .problem-copy{margin-top:18px;color:var(--ink-soft);font-size:14px;}
+  .problem-copy strong{color:var(--ink);}
+
+  /* ================= PRODUCT VIDEO ================= */
+  .video-wrapper{
+    position:relative;
+    width:100%;
+    padding-top:56.25%;
+    margin-top:24px;
+    border-radius:16px;
+    overflow:hidden;
+    background:var(--void);
+    box-shadow:0 8px 36px rgba(155,43,174,0.18), 0 0 0 1px var(--line);
+  }
+  .video-wrapper iframe{
+    position:absolute;top:0;left:0;width:100%;height:100%;
+    border:none;
+  }
+
+  /* ================= HOW IT WORKS (real sequence → numbers OK) ================= */
+  .steps{margin-top:30px;position:relative;}
+  .steps::before{
+    content:"";position:absolute;left:19px;top:8px;bottom:8px;width:1px;
+    background:repeating-linear-gradient(180deg, var(--violet) 0 4px, transparent 4px 9px);
+  }
+  .step{display:flex;gap:18px;padding-bottom:30px;position:relative;}
+  .step:last-child{padding-bottom:0;}
+  .step-num{
+    flex-shrink:0;width:40px;height:40px;border-radius:50%;
+    background:var(--void);color:var(--violet-glow);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;
+    position:relative;z-index:1;
+  }
+  .step-body h3{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:600;margin-bottom:6px;margin-top:6px;}
+  .step-body p{font-size:13.5px;color:var(--ink-soft);}
+
+  /* ================= FEATURES ================= */
+  .feature-strip{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+    margin-top:28px;
+  }
+  .feature-pill{
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:18px 18px;
+    background:linear-gradient(160deg, #fff 60%, var(--paper-2));
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+  }
+  .feature-pill::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg, var(--violet), var(--violet-glow));
+    opacity:0;transition:opacity .25s ease;
+  }
+  .feature-pill:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 32px rgba(155,43,174,0.12);
+    border-color:var(--violet);
+  }
+  .feature-pill:hover::before{opacity:1;}
+  .feature-pill .fi{
+    flex-shrink:0;
+    width:40px;height:40px;border-radius:10px;
+    background:var(--void);color:var(--violet-glow);
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;
+    box-shadow:0 4px 12px rgba(11,7,16,0.15);
+  }
+  .feature-pill .fp-body{flex:1;}
+  .feature-pill h3{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;margin-bottom:5px;}
+  .feature-pill p{font-size:13px;color:var(--ink-soft);line-height:1.5;}
+
+  /* ---- Features: staggered scroll-in choreography ---- */
+  .feature-strip .feature-pill{
+    opacity:0;
+    transform:translateY(28px) scale(.97);
+    transition:opacity .7s cubic-bezier(.16,1,.3,1),
+               transform .7s cubic-bezier(.16,1,.3,1),
+               box-shadow .25s ease,
+               border-color .25s ease;
+  }
+  .feature-strip.in .feature-pill{opacity:1;transform:none;}
+  .feature-strip.in .feature-pill:nth-child(1){transition-delay:.05s;}
+  .feature-strip.in .feature-pill:nth-child(2){transition-delay:.14s;}
+  .feature-strip.in .feature-pill:nth-child(3){transition-delay:.23s;}
+  .feature-strip.in .feature-pill:nth-child(4){transition-delay:.32s;}
+  .feature-strip.in .feature-pill:nth-child(5){transition-delay:.41s;}
+  /* keep hover lift snappy despite the long entrance transition */
+  .feature-pill:hover{
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+
+  /* icon: pop on entrance, react on hover */
+  .feature-pill .fi{transition:transform .3s cubic-bezier(.2,1.4,.35,1), box-shadow .3s ease;}
+  .feature-strip.in .feature-pill .fi{animation:fiPop .6s cubic-bezier(.2,1.4,.35,1) backwards;}
+  .feature-strip.in .feature-pill:nth-child(1) .fi{animation-delay:.18s;}
+  .feature-strip.in .feature-pill:nth-child(2) .fi{animation-delay:.27s;}
+  .feature-strip.in .feature-pill:nth-child(3) .fi{animation-delay:.36s;}
+  .feature-strip.in .feature-pill:nth-child(4) .fi{animation-delay:.45s;}
+  .feature-strip.in .feature-pill:nth-child(5) .fi{animation-delay:.54s;}
+  .feature-strip.in .feature-pill:hover .fi{
+    transform:scale(1.14) rotate(-6deg);
+    animation:fiGlow 1.8s ease-in-out infinite;
+  }
+  @keyframes fiPop{
+    0%{opacity:0;transform:scale(.35) rotate(-14deg);}
+    100%{opacity:1;transform:scale(1) rotate(0);}
+  }
+  @keyframes fiGlow{
+    0%,100%{box-shadow:0 4px 12px rgba(11,7,16,0.15);}
+    50%{box-shadow:0 6px 20px rgba(155,43,174,0.45);}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .feature-strip .feature-pill{opacity:1;transform:none;transition:none;}
+    .feature-strip.in .feature-pill .fi{animation:none;}
+    .feature-strip.in .feature-pill:hover .fi{animation:none;transform:none;}
+  }
+
+  /* ================= RANGE (tabs) ================= */
+  .tabs{display:flex;gap:8px;margin-top:26px;margin-bottom:22px;}
+  .tab{
+    flex:1;text-align:center;
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.04em;text-transform:uppercase;font-weight:600;
+    padding:12px 10px;border-radius:3px;
+    border:1px solid var(--line-strong);
+    background:#fff;color:var(--ink-soft);
+    cursor:pointer;
+    transition:background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .tab.active{background:var(--void);color:#fff;border-color:var(--void);}
+
+  .panel{display:none;}
+  .panel.active{display:block;}
+  .panel p.desc{color:var(--ink-soft);font-size:13.5px;margin-bottom:18px;}
+
+  .variant-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;}
+  @media (max-width:380px){ .variant-grid{grid-template-columns:1fr;} }
+  .variant{
+    border:1px solid var(--line-strong);border-radius:10px;padding:16px;background:#fff;
+  }
+  .variant h4{font-family:'Unbounded',sans-serif;font-weight:600;font-size:14px;margin-bottom:14px;}
+
+  /* Spectrum spec bar — the signature element, reused */
+  .specbar-row{margin-bottom:14px;}
+  .specbar-row:last-child{margin-bottom:0;}
+  .specbar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+  .specbar-name{font-size:10.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.05em;}
+  .specbar-val{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13.5px;}
+  .specbar-track{
+    height:6px;border-radius:3px;
+    background:repeating-linear-gradient(90deg, var(--paper-2) 0 3px, #fff 3px 6px);
+    border:1px solid var(--line);
+    overflow:hidden;
+    position:relative;
+  }
+  .specbar-fill{
+    height:100%;border-radius:2px;
+    background:linear-gradient(90deg, var(--violet-deep), var(--violet));
+    transform-origin:left;
+    animation:fillbar 1s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  .specbar-fill.uv{background:linear-gradient(90deg, #7a0f22, var(--uv));}
+  @keyframes fillbar{ from{transform:scaleX(0);} to{transform:scaleX(1);} }
+  @media (prefers-reduced-motion: reduce){ .specbar-fill{animation:none;} }
+
+  .qc-note{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-soft);text-align:center;margin-top:16px;}
+
+  /* ================= COMPARE — premium full-width ================= */
+  .cmp{
+    position:relative;
+    overflow:hidden;
+    padding:64px 0;
+    background:
+      radial-gradient(58% 55% at 12% 0%, rgba(155,43,174,0.07), transparent 60%),
+      radial-gradient(52% 50% at 100% 100%, rgba(225,79,255,0.06), transparent 60%),
+      var(--paper);
+  }
+  /* subtle technical grid texture */
+  .cmp::before{
+    content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(155,43,174,0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(155,43,174,0.055) 1px, transparent 1px);
+    background-size:66px 66px;
+    -webkit-mask:radial-gradient(78% 78% at 50% 42%, #000, transparent 80%);
+            mask:radial-gradient(78% 78% at 50% 42%, #000, transparent 80%);
+    opacity:.55;
+  }
+  .cmp-inner{
+    position:relative;z-index:1;
+    max-width:520px;margin:0 auto;padding:0 22px;
+    display:flex;flex-direction:column;align-items:stretch;
+  }
+  @media (min-width:640px){ .cmp-inner{max-width:640px;} }
+
+  /* Header — matches .eyebrow-dark / .section h2 */
+  .cmp-eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:0.16em;text-transform:uppercase;
+    color:var(--violet);
+    display:flex;align-items:center;gap:8px;
+    margin-bottom:12px;
+  }
+  .cmp-eyebrow::before{
+    content:"";width:16px;height:1px;background:var(--violet);
+  }
+  .cmp-title{
+    font-family:'Unbounded',sans-serif;font-weight:700;
+    font-size:26px;line-height:1.15;letter-spacing:-0.01em;
+    text-align:left;color:var(--ink);
+    margin-bottom:28px;
+  }
+  .cmp-title .glass{
+    background:linear-gradient(115deg,var(--violet),var(--violet-glow));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+
+  /* Cards row — single column, same width as every other section */
+  .cmp-row{
+    position:relative;width:100%;
+    display:flex;flex-direction:column;align-items:stretch;
+    gap:32px;
+  }
+  .cmp-card{
+    position:relative;width:100%;
+    border-radius:18px;
+    padding:24px 22px;
+    display:flex;flex-direction:column;
+  }
+
+  /* UV99 card */
+  .cmp-card.pro{
+    color:#fff;
+    background:
+      radial-gradient(120% 85% at 22% 0%, rgba(225,79,255,0.26), transparent 55%),
+      linear-gradient(165deg, #1c1029 0%, #0b0710 72%);
+    border:1px solid rgba(225,79,255,0.36);
+    box-shadow:
+      0 24px 60px -30px rgba(155,43,174,0.55),
+      0 0 48px -16px rgba(225,79,255,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  .cmp-card.pro::after{
+    content:"";position:absolute;inset:0;border-radius:18px;pointer-events:none;
+    background:radial-gradient(72% 40% at 50% -6%, rgba(225,79,255,0.34), transparent 72%);
+  }
+
+  /* Ordinary glass card — deliberately weaker */
+  .cmp-card.base{
+    color:var(--ink-soft);
+    background:linear-gradient(165deg,#fbf8fc,#efe7f3);
+    border:1.5px dashed rgba(155,43,174,0.42);
+    box-shadow:0 18px 40px -30px rgba(22,15,28,0.28);
+  }
+
+  .cmp-chip{
+    align-self:flex-start;position:relative;z-index:2;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;font-weight:600;
+    letter-spacing:0.16em;text-transform:uppercase;
+    padding:6px 12px;border-radius:30px;
+    margin-bottom:18px;
+  }
+  .cmp-card.pro .cmp-chip{
+    background:rgba(225,79,255,0.14);color:var(--violet-glow);
+    border:1px solid rgba(225,79,255,0.4);
+    box-shadow:0 0 24px -6px rgba(225,79,255,0.55);
+  }
+  .cmp-card.base .cmp-chip{
+    background:#fff;color:var(--ink-soft);border:1px solid var(--line-strong);
+  }
+
+  .cmp-stat{
+    position:relative;z-index:2;
+    font-family:'Unbounded',sans-serif;font-weight:800;line-height:0.92;
+    margin-bottom:10px;
+  }
+  .cmp-card.pro .cmp-stat{
+    font-size:48px;
+    color:var(--violet-glow);
+    text-shadow:0 0 44px rgba(225,79,255,0.45);
+  }
+  .cmp-card.base .cmp-stat{
+    font-size:36px;
+    color:var(--ink);opacity:0.42;
+  }
+  .cmp-statcap{
+    position:relative;z-index:2;
+    font-size:13.5px;line-height:1.5;
+    margin-bottom:22px;
+  }
+  .cmp-card.pro .cmp-statcap{color:rgba(255,255,255,0.72);}
+  .cmp-card.base .cmp-statcap{color:var(--ink-soft);opacity:0.72;}
+
+  .cmp-list{
+    list-style:none;display:flex;flex-direction:column;
+    gap:13px;
+    position:relative;z-index:2;margin-top:auto;
+  }
+  .cmp-list li{
+    font-size:13px;line-height:1.45;
+    display:flex;gap:12px;align-items:flex-start;
+  }
+  .cmp-list li .ic{
+    flex-shrink:0;width:20px;height:20px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:10px;font-weight:700;margin-top:1px;
+  }
+  .cmp-card.pro li{color:rgba(255,255,255,0.92);}
+  .cmp-card.pro li .ic{
+    background:rgba(225,79,255,0.16);color:var(--violet-glow);
+    border:1px solid rgba(225,79,255,0.42);
+    box-shadow:0 0 18px -3px rgba(225,79,255,0.6);
+  }
+  .cmp-card.base li{color:var(--ink-soft);}
+  .cmp-card.base li .ic{
+    background:rgba(110,100,121,0.14);color:var(--ink-soft);
+    border:1px solid rgba(110,100,121,0.26);
+  }
+
+  /* VS badge — sits in flow, centered on the seam between the two cards */
+  .cmp-vs{
+    order:1;align-self:center;
+    margin:-4px 0;z-index:6;
+    width:46px;height:46px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Unbounded',sans-serif;font-weight:800;
+    font-size:13px;letter-spacing:0.02em;color:var(--violet);
+    background:var(--paper);
+    border:1px solid rgba(155,43,174,0.3);
+    box-shadow:
+      0 8px 22px -8px rgba(11,7,16,0.22),
+      0 0 34px -8px rgba(225,79,255,0.5),
+      inset 0 0 0 5px rgba(255,255,255,0.72);
+  }
+  .cmp-card.base{order:2;}
+
+  /* Summary / key takeaway */
+  .cmp-summary{
+    width:100%;
+    margin-top:30px;
+    display:flex;flex-direction:column;
+    border-radius:16px;overflow:hidden;
+    border:1px solid var(--line-strong);
+    background:linear-gradient(120deg,#fff,var(--paper-2));
+    box-shadow:0 20px 50px -34px rgba(155,43,174,0.42);
+  }
+  .cmp-summary > div{
+    padding:20px 22px;
+    display:flex;flex-direction:column;justify-content:center;gap:6px;
+    text-align:center;
+  }
+  .cmp-summary > div + div{border-top:1px solid var(--line);}
+  .cmp-sum-big{
+    font-family:'Unbounded',sans-serif;font-weight:800;
+    font-size:20px;line-height:1.1;color:var(--ink);
+  }
+  .cmp-sum-big .amp{color:var(--violet);}
+  .cmp-sum-sub{
+    font-size:12.5px;color:var(--ink-soft);line-height:1.5;
+  }
+  .cmp-summary .lead-cell{
+    background:linear-gradient(165deg,#1c1029,#0b0710);color:#fff;
+  }
+  .cmp-summary .lead-cell .cmp-sum-big{
+    color:var(--violet-glow);text-shadow:0 0 32px rgba(225,79,255,0.4);
+  }
+  .cmp-summary .lead-cell .cmp-sum-sub{color:rgba(255,255,255,0.7);}
+
+  /* ---- Scroll-reveal choreography ---- */
+  .cmp .r{
+    opacity:0;transform:translateY(26px);
+    transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);
+  }
+  .cmp.in .r{opacity:1;transform:none;}
+  .cmp .r.d1{transition-delay:.12s;}
+  .cmp-card.pro{
+    opacity:0;transform:translateY(24px);
+    transition:opacity .8s cubic-bezier(.16,1,.3,1) .2s, transform .8s cubic-bezier(.16,1,.3,1) .2s;
+  }
+  .cmp.in .cmp-card.pro{opacity:1;transform:none;}
+  .cmp-card.base{
+    opacity:0;transform:translateY(24px);
+    transition:opacity .8s cubic-bezier(.16,1,.3,1) .32s, transform .8s cubic-bezier(.16,1,.3,1) .32s;
+  }
+  .cmp.in .cmp-card.base{opacity:1;transform:none;}
+  .cmp-vs{
+    opacity:0;transform:scale(.4);
+    transition:opacity .5s ease .6s, transform .7s cubic-bezier(.2,1.35,.35,1) .6s;
+  }
+  .cmp.in .cmp-vs{opacity:1;transform:scale(1);}
+  .cmp-summary{
+    opacity:0;transform:translateY(28px);
+    transition:opacity .8s cubic-bezier(.16,1,.3,1) .5s, transform .8s cubic-bezier(.16,1,.3,1) .5s;
+  }
+  .cmp.in .cmp-summary{opacity:1;transform:none;}
+
+  @media (prefers-reduced-motion: reduce){
+    .cmp .r,.cmp-card.pro,.cmp-card.base,.cmp-vs,.cmp-summary{
+      opacity:1;transform:none;transition:none;
+    }
+    .cmp.in .cmp-vs{transform:scale(1);}
+  }
+
+  /* ================= WARRANTY ================= */
+  .warranty-band{
+    position:relative;overflow:hidden;isolation:isolate;
+    background:var(--void);color:#fff;padding:52px 0;text-align:center;
+    background-image:radial-gradient(ellipse 500px 300px at 50% 0%, rgba(155,43,174,0.35), transparent 70%);
+  }
+  .warranty-band::before{
+    content:"";position:absolute;inset:-45% -15%;z-index:0;pointer-events:none;
+    background:conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(225,79,255,0.10) 40deg, transparent 110deg, transparent 220deg, rgba(155,43,174,0.08) 260deg, transparent 330deg);
+    opacity:0;transition:opacity .8s ease;
+  }
+  .warranty-band.in::before{opacity:1;animation:wSpin 22s linear infinite;}
+  @keyframes wSpin{to{transform:rotate(1turn);}}
+
+  .warranty-fx{
+    position:absolute;left:50%;top:40%;width:0;height:0;z-index:0;pointer-events:none;
+  }
+  .warranty-fx i{
+    position:absolute;left:50%;top:50%;width:140px;height:140px;margin:-70px 0 0 -70px;
+    border-radius:50%;border:1px solid rgba(225,79,255,0.45);opacity:0;
+  }
+  .warranty-band.in .warranty-fx i{animation:wRing 3.6s ease-out infinite;}
+  .warranty-band.in .warranty-fx i:nth-child(2){animation-delay:1.2s;}
+  .warranty-band.in .warranty-fx i:nth-child(3){animation-delay:2.4s;}
+  @keyframes wRing{
+    0%{transform:scale(.3);opacity:0;}
+    12%{opacity:.55;}
+    70%{opacity:0;}
+    100%{transform:scale(2.6);opacity:0;}
+  }
+
+  .warranty-band .wrap{position:relative;z-index:1;}
+  .wnum{line-height:1;}
+  .wnum-fig{
+    display:inline-block;
+    font-family:'Unbounded',sans-serif;font-size:58px;font-weight:800;line-height:1;
+    color:var(--violet-glow);text-shadow:0 0 24px rgba(225,79,255,0.5);
+  }
+  .warranty-band.in .wnum-fig{
+    animation:wPop .8s cubic-bezier(.2,1.5,.35,1) both, wGlow 2.6s ease-in-out .8s infinite alternate;
+  }
+  @keyframes wPop{from{transform:scale(.4);opacity:0;filter:blur(6px);}to{transform:scale(1);opacity:1;filter:blur(0);}}
+  @keyframes wGlow{
+    from{text-shadow:0 0 16px rgba(225,79,255,0.3);}
+    to{text-shadow:0 0 40px rgba(225,79,255,0.75), 0 0 80px rgba(225,79,255,0.22);}
+  }
+  .wnum-label{
+    display:block;margin-top:10px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;
+    letter-spacing:0.14em;text-transform:uppercase;color:#fff;
+  }
+  .wnum-label span{display:inline-block;opacity:0;transform:translateY(9px);}
+  .warranty-band.in .wnum-label span{
+    animation:wLetter .5s cubic-bezier(.16,1,.3,1) forwards;
+    animation-delay:calc(var(--i,0)*0.03s + 0.45s);
+  }
+  @keyframes wLetter{to{opacity:1;transform:translateY(0);}}
+  .warranty-band p{
+    font-size:13px;color:rgba(255,255,255,0.65);margin:16px auto 0;max-width:320px;
+    opacity:0;transform:translateY(12px);
+  }
+  .warranty-band.in p{animation:wLetter .7s ease forwards .85s;}
+
+  /* ================= CONTACT ================= */
+  .contact-block{position:relative;overflow:hidden;isolation:isolate;padding:60px 0 0;text-align:center;}
+  .contact-fx{
+    position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;
+    background:repeating-linear-gradient(118deg, transparent 0 24px, rgba(155,43,174,0.055) 24px 25px);
+    -webkit-mask:linear-gradient(180deg,transparent,#000 28%,#000 62%,transparent);
+            mask:linear-gradient(180deg,transparent,#000 28%,#000 62%,transparent);
+    transition:opacity .8s ease;
+  }
+  .contact-block.in .contact-fx{opacity:1;animation:rayShift 9s linear infinite;}
+  @keyframes rayShift{to{background-position:130px 0;}}
+  .contact-cut{
+    position:absolute;left:0;right:0;top:46%;height:1px;z-index:0;pointer-events:none;
+    background:linear-gradient(90deg,transparent,var(--violet-glow),transparent);
+    transform:scaleX(0);opacity:.55;
+  }
+  .contact-block.in .contact-cut{animation:cutIn 1s cubic-bezier(.16,1,.3,1) forwards .15s;}
+  @keyframes cutIn{to{transform:scaleX(1);}}
+
+  .contact-block .wrap{position:relative;z-index:1;}
+  .contact-block .kicker{
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--violet);
+    letter-spacing:0.14em;text-transform:uppercase;margin-bottom:14px;
+    opacity:0;transform:translateY(14px);
+  }
+  .contact-block.in .kicker{animation:cRise .6s ease forwards .15s;}
+  .contact-block h2{font-size:28px;margin-bottom:16px;}
+  .rays-head .l{display:block;}
+  .rays-head .w{
+    display:inline-block;overflow:hidden;vertical-align:bottom;
+    padding-bottom:.14em;margin-bottom:-.14em;
+  }
+  .rays-head .w > span{display:inline-block;transform:translateY(110%);}
+  .contact-block.in .rays-head .w > span{
+    animation:wordUp .7s cubic-bezier(.16,1,.3,1) forwards;
+    animation-delay:var(--d,.24s);
+  }
+  @keyframes wordUp{to{transform:translateY(0);}}
+  .rays-head .accent > span{color:var(--violet-glow);}
+  .contact-block.in .rays-head .accent > span{
+    animation:wordUp .7s cubic-bezier(.16,1,.3,1) forwards, raysGlow 2.4s ease-in-out 1.3s infinite alternate;
+    animation-delay:var(--d,.48s), 1.3s;
+  }
+  @keyframes raysGlow{from{text-shadow:0 0 0 transparent;}to{text-shadow:0 0 22px rgba(225,79,255,0.55);}}
+  .contact-block p{
+    color:var(--ink-soft);font-size:14px;max-width:340px;margin:0 auto 26px;
+    opacity:0;transform:translateY(14px);
+  }
+  .contact-block.in p{animation:cRise .6s ease forwards .6s;}
+  @keyframes cRise{to{opacity:1;transform:translateY(0);}}
+  .handle-btn{
+    position:relative;overflow:hidden;
+    display:inline-flex;align-items:center;gap:10px;
+    border:1px solid var(--line-strong);border-radius:30px;
+    padding:12px 22px;font-family:'Unbounded',sans-serif;font-weight:600;font-size:14px;
+    opacity:0;transform:translateY(14px);
+    transition:border-color .2s ease, background .2s ease, box-shadow .25s ease;
+  }
+  .contact-block.in .handle-btn{animation:cRise .6s ease forwards .78s;}
+  .handle-btn::after{
+    content:"";position:absolute;top:0;left:-60%;width:45%;height:100%;
+    background:linear-gradient(90deg,transparent,rgba(155,43,174,0.18),transparent);
+    transform:skewX(-20deg);
+  }
+  .contact-block.in .handle-btn::after{animation:sheen 3.6s ease-in-out 2s infinite;}
+  @keyframes sheen{0%{left:-60%;}55%,100%{left:135%;}}
+  .handle-btn:hover{border-color:var(--violet);background:var(--paper-2);box-shadow:0 8px 24px -10px rgba(155,43,174,0.4);}
+  .handle-btn .ar{display:inline-block;transition:transform .2s ease;}
+  .handle-btn:hover .ar{transform:translateX(4px);}
+  .contact-block.in .handle-btn .ar{animation:arNudge 2.4s ease-in-out 1.6s infinite;}
+  @keyframes arNudge{0%,100%{transform:translateX(0);}50%{transform:translateX(4px);}}
+
+  @media (prefers-reduced-motion: reduce){
+    .warranty-band::before,.warranty-fx{display:none;}
+    .warranty-band.in .wnum-fig,
+    .warranty-band.in .wnum-label span,
+    .warranty-band.in p,
+    .contact-block.in .contact-fx,
+    .contact-block.in .contact-cut,
+    .contact-block.in .kicker,
+    .contact-block.in p,
+    .contact-block.in .handle-btn,
+    .contact-block.in .handle-btn::after,
+    .contact-block.in .handle-btn .ar,
+    .contact-block.in .rays-head .w > span,
+    .contact-block.in .rays-head .accent > span{animation:none;}
+    .wnum-fig,.wnum-label span,.warranty-band p,
+    .contact-block .kicker,.contact-block p,.handle-btn{opacity:1;transform:none;}
+    .rays-head .w > span{transform:none;}
+    .contact-cut{transform:scaleX(1);}
+  }
+
+  footer{padding:34px 0 calc(112px + var(--safe-bottom));text-align:center;}
+  footer p{color:var(--ink-soft);font-size:11px;}
+
+  /* ================= HEAT-REJECTION SIMULATOR ================= */
+  .hs{
+    position:relative;
+    color:var(--ink);
+    padding:64px 0 74px;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 720px 440px at 15% -6%, rgba(155,43,174,0.08), transparent 60%),
+      radial-gradient(ellipse 640px 460px at 98% 18%, rgba(79,227,255,0.06), transparent 60%),
+      var(--paper);
+  }
+  .hs-wrap{max-width:1120px;margin:0 auto;padding:0 26px;}
+  .hs-head .eyebrow-dark{color:var(--violet);}
+  .hs-head .eyebrow-dark::before{background:var(--violet);}
+  .hs-head h2{
+    font-size:clamp(24px,4.4vw,40px);line-height:1.08;letter-spacing:-0.02em;
+    color:var(--ink);margin-bottom:12px;text-transform:uppercase;
+  }
+  .hs-head p{color:var(--ink-soft);font-size:14.5px;max-width:540px;}
+
+  /* segmented control */
+  .hs-seg{display:flex;gap:8px;margin:26px 0 22px;flex-wrap:wrap;}
+  .hs-seg__btn{
+    -webkit-appearance:none;appearance:none;
+    flex:1 1 auto;min-width:150px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;
+    letter-spacing:0.06em;text-transform:uppercase;
+    padding:13px 16px;border-radius:4px;cursor:pointer;
+    background:#fff;
+    border:1px solid var(--line-strong);
+    color:var(--ink-soft);
+    transition:background .25s ease,border-color .25s ease,color .25s ease,box-shadow .25s ease;
+  }
+  .hs-seg__btn:hover{color:var(--ink);border-color:var(--violet);}
+  .hs-seg__btn.is-active{
+    background:linear-gradient(180deg, rgba(225,79,255,0.12), rgba(155,43,174,0.05));
+    border-color:var(--violet-glow);color:var(--ink);
+    box-shadow:0 0 0 1px rgba(225,79,255,0.28), 0 12px 30px -16px rgba(225,79,255,0.5);
+  }
+
+  /* layout grid */
+  .hs-grid{
+    display:grid;
+    grid-template-columns:minmax(0,2fr) minmax(0,0.92fr);
+    gap:20px;align-items:stretch;
+  }
+  .hs-stage-card{
+    position:relative;border-radius:20px;overflow:hidden;padding:10px;
+    background:linear-gradient(160deg,#fff,var(--paper-2));
+    border:1px solid var(--line);
+    box-shadow:0 24px 50px -34px rgba(155,43,174,0.28);
+  }
+  .hs-stage{
+    position:relative;display:block;width:100%;
+    aspect-ratio:1690/931;border-radius:12px;overflow:hidden;
+    pointer-events:none;background:#0A0610;
+  }
+  .hs-photo{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;display:block;
+    transition:filter .9s ease;
+  }
+  .hs-stage[data-state="none"] .hs-photo{filter:saturate(1.16) brightness(1.05) contrast(1.03);}
+  .hs-stage[data-state="uv50"] .hs-photo{filter:saturate(1) brightness(.98) hue-rotate(-6deg);}
+  .hs-stage[data-state="uv70"] .hs-photo{filter:saturate(1.05) brightness(.95) hue-rotate(-12deg);}
+  .hs-stage[data-state="pro50"] .hs-photo{filter:saturate(1.02) brightness(.93) hue-rotate(-17deg);}
+  .hs-stage[data-state="pro70"] .hs-photo{filter:saturate(1) brightness(.9) hue-rotate(-22deg);}
+  .hs-wash{
+    position:absolute;inset:0;mix-blend-mode:overlay;opacity:0;
+    transition:background .9s ease, opacity .9s ease;
+  }
+  .hs-stage[data-state="none"] .hs-wash{background:radial-gradient(ellipse at 40% 55%, rgba(255,110,40,0.55), rgba(255,60,20,0.14) 70%);opacity:.6;}
+  .hs-stage[data-state="uv50"] .hs-wash{background:radial-gradient(ellipse at 45% 55%, rgba(150,110,255,0.5), rgba(90,70,200,0.12) 70%);opacity:.5;}
+  .hs-stage[data-state="uv70"] .hs-wash{background:radial-gradient(ellipse at 45% 55%, rgba(90,190,255,0.5), rgba(120,90,255,0.12) 70%);opacity:.55;}
+  .hs-stage[data-state="pro50"] .hs-wash{background:radial-gradient(ellipse at 45% 55%, rgba(70,205,255,0.5), rgba(95,140,255,0.12) 70%);opacity:.5;}
+  .hs-stage[data-state="pro70"] .hs-wash{background:radial-gradient(ellipse at 45% 55%, rgba(125,235,255,0.52), rgba(110,170,255,0.12) 70%);opacity:.5;}
+  .hs-fx{position:absolute;inset:0;width:100%;height:100%;display:block;}
+
+  /* stats panel */
+  .hs-panel{
+    display:flex;flex-direction:column;gap:15px;
+    border-radius:20px;padding:24px;
+    background:linear-gradient(180deg,#fff,var(--paper-2));
+    border:1px solid var(--line);
+    box-shadow:0 24px 50px -34px rgba(155,43,174,0.25);
+  }
+  .hs-cabin-label{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px;
+  }
+  .hs-cabin-temp{
+    font-family:'Unbounded',sans-serif;font-weight:800;line-height:1;
+    font-size:clamp(48px,8vw,76px);color:var(--ink);
+    display:flex;align-items:flex-start;gap:3px;
+    transition:color .9s ease, text-shadow .9s ease;
+  }
+  .hs-cabin-temp .deg{font-size:0.4em;margin-top:0.55em;color:var(--ink-soft);}
+  .hs[data-state="none"] .hs-cabin-temp{color:#D63A12;text-shadow:0 0 26px rgba(214,58,18,0.22);}
+  .hs[data-state="uv50"] .hs-cabin-temp{color:#7A3FD6;text-shadow:0 0 26px rgba(122,63,214,0.2);}
+  .hs[data-state="uv70"] .hs-cabin-temp{color:#1E7C9C;text-shadow:0 0 26px rgba(30,124,156,0.2);}
+  .hs[data-state="pro50"] .hs-cabin-temp{color:#186F8C;text-shadow:0 0 26px rgba(24,111,140,0.22);}
+  .hs[data-state="pro70"] .hs-cabin-temp{color:#136185;text-shadow:0 0 28px rgba(19,97,133,0.24);}
+
+  .hs-mood{
+    align-self:flex-start;
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;
+    letter-spacing:0.1em;text-transform:uppercase;
+    padding:6px 12px;border-radius:20px;border:1px solid transparent;
+    transition:background .6s ease,color .6s ease,border-color .6s ease;
+  }
+  .hs-mood[data-state="none"]{background:rgba(214,58,18,0.12);color:#C13A16;border-color:rgba(214,58,18,0.35);}
+  .hs-mood[data-state="uv50"]{background:rgba(122,63,214,0.12);color:#6B34C0;border-color:rgba(122,63,214,0.32);}
+  .hs-mood[data-state="uv70"]{background:rgba(30,124,156,0.12);color:#1E7C9C;border-color:rgba(30,124,156,0.32);}
+  .hs-mood[data-state="pro50"]{background:rgba(24,111,140,0.12);color:#186F8C;border-color:rgba(24,111,140,0.34);}
+  .hs-mood[data-state="pro70"]{background:rgba(19,97,133,0.12);color:#136185;border-color:rgba(19,97,133,0.36);}
+
+  .hs-divider{height:1px;background:var(--line);margin:1px 0;}
+  .hs-stat__top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+  .hs-stat__name{font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.06em;}
+  .hs-stat__val{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;color:var(--ink);}
+  .hs-bar{height:6px;border-radius:3px;background:rgba(155,43,174,0.10);overflow:hidden;}
+  .hs-bar__fill{
+    height:100%;transform-origin:left;transform:scaleX(0);
+    background:linear-gradient(90deg,var(--violet),var(--violet-glow));
+    transition:transform .9s cubic-bezier(.16,1,.3,1);
+  }
+  .hs-bar__fill.is-cyan{background:linear-gradient(90deg,#1E86A8,#3FBFDD);}
+  .hs-note{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-soft);line-height:1.5;margin-top:2px;}
+  .hs-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+
+  /* ---- photo overlay: interactive scene states ---- */
+  .hs-glow{transform-box:fill-box;transform-origin:center;animation:hs-sun-pulse 4s ease-in-out infinite;}
+  @keyframes hs-sun-pulse{0%,100%{opacity:.45;transform:scale(1);}50%{opacity:.85;transform:scale(1.08);}}
+
+  .hs-film{fill:url(#hs-film-grad);opacity:0;transition:opacity .9s ease, filter .9s ease;}
+  .hs-stage[data-state="uv50"] .hs-film{opacity:.34;filter:drop-shadow(0 0 14px rgba(225,79,255,0.55));}
+  .hs-stage[data-state="uv70"] .hs-film{opacity:.52;filter:drop-shadow(0 0 26px rgba(225,79,255,0.9));}
+  .hs-stage[data-state="pro50"] .hs-film{opacity:.6;filter:drop-shadow(0 0 30px rgba(120,190,255,0.9));}
+  .hs-stage[data-state="pro70"] .hs-film{opacity:.68;filter:drop-shadow(0 0 34px rgba(150,220,255,0.95));}
+
+  .hs-shimmer{opacity:0;transition:opacity .9s ease;transform-box:fill-box;transform-origin:center;}
+  .hs-stage[data-state="none"] .hs-shimmer{opacity:.85;animation:hs-wave 3s ease-in-out infinite;}
+  .hs-stage[data-state="uv50"] .hs-shimmer{opacity:.32;animation:hs-wave 3.4s ease-in-out infinite;}
+  .hs-stage[data-state="uv70"] .hs-shimmer{opacity:.06;}
+  .hs-stage[data-state="pro50"] .hs-shimmer{opacity:.03;}
+  .hs-stage[data-state="pro70"] .hs-shimmer{opacity:0;}
+  @keyframes hs-wave{0%,100%{transform:translateX(0) scaleY(1);}50%{transform:translateX(10px) scaleY(1.16);}}
+
+  .hs-particle{fill:#FF5A1E;animation:hs-float 3.2s ease-in-out infinite;animation-delay:var(--pd,0s);}
+  .hs-stage[data-state="uv50"] .hs-particle{fill:#B98CFF;}
+  .hs-stage[data-state="uv70"] .hs-particle{fill:#7FE9FF;}
+  .hs-stage[data-state="pro50"] .hs-particle{fill:#8FD8FF;}
+  .hs-stage[data-state="pro70"] .hs-particle{fill:#B7F2FF;}
+  @keyframes hs-float{0%{transform:translate(0,0);opacity:0;}20%{opacity:.9;}100%{transform:translate(var(--px,0),-84px);opacity:0;}}
+
+  .hs-ray{transform:translate(var(--x,0),var(--y,0));}
+  .hs-ray__beam{opacity:0;will-change:transform,opacity;}
+  .hs-ray.is-pass .hs-ray__beam{fill:url(#hs-ray-grad);animation:hs-beam-pass 2.2s linear infinite;animation-delay:var(--delay,0s);}
+  .hs-ray.is-reflect .hs-ray__beam{fill:url(#hs-ray-violet);animation:hs-beam-reflect 2.4s ease-out infinite;animation-delay:var(--delay,0s);}
+  .hs-ray.is-off .hs-ray__beam{animation:none;opacity:0;}
+  @keyframes hs-beam-pass{
+    0%{transform:translate(-60px,-60px) rotate(52deg);opacity:0;}
+    12%{opacity:.92;}
+    72%{opacity:.6;}
+    100%{transform:translate(470px,600px) rotate(52deg);opacity:0;}
+  }
+  @keyframes hs-beam-reflect{
+    0%{transform:translate(340px,430px) rotate(-30deg);opacity:0;}
+    16%{opacity:.9;}
+    100%{transform:translate(820px,60px) rotate(-30deg);opacity:0;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .hs-glow{animation:none;}
+    .hs-shimmer,.hs-stage[data-state] .hs-shimmer{animation:none !important;}
+    .hs-particle{display:none;}
+    .hs-ray.is-reflect .hs-ray__beam,.hs-ray.is-off .hs-ray__beam{opacity:0;animation:none;}
+    .hs-ray.is-pass .hs-ray__beam{animation:none;opacity:.5;transform:translate(200px,260px) rotate(52deg);}
+    .hs-bar__fill,.hs-cabin-temp,.hs-film,.hs-photo,.hs-wash{transition:none;}
+  }
+
+  @media (max-width:860px){
+    .hs-grid{grid-template-columns:1fr;}
+    .hs-seg__btn{min-width:0;flex:1 1 30%;}
+  }
+  @media (max-width:520px){
+    .hs{padding:48px 0 56px;}
+    .hs-wrap{padding:0 18px;}
+    .hs-seg{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+    .hs-seg::-webkit-scrollbar{display:none;}
+    .hs-seg__btn{flex:0 0 auto;min-width:142px;}
+    .hs-panel{padding:18px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+
+  <div class="hero-split" aria-hidden="true">
+    <span class="line"></span>
+    <span class="hero-tag left"><span class="dot"></span>Without UV99</span>
+    <span class="hero-tag right"><span class="dot"></span>With UV99</span>
+  </div>
+
+  <div class="hero-top">
+    <a href="#" class="wordmark">UV99</a>
+    <span class="pill">3-Year Warranty</span>
+  </div>
+
+  <div class="hero-content">
+    <div class="eyebrow">UV-Defense Glazing</div>
+    <h1>The rays stop<br><span class="accent">right here.</span></h1>
+    <p class="hero-sub">99% of harmful UV blocked at the glass. Everything else — the light, the view, the drive — comes through clear.</p>
+    <div class="hero-cta">
+      <a href="#panel-uv99" class="btn btn-primary">See Range</a>
+      <a href="#contact" class="btn btn-outline">Message Us</a>
+    </div>
+  </div>
+
+  <div class="scroll-cue"><span>Scroll</span><span class="line"></span></div>
+</section>
+
+<!-- ================= HEAT-REJECTION SIMULATOR ================= -->
+<section class="hs" id="heatsim" data-state="none" aria-labelledby="hs-heading">
+  <div class="hs-wrap reveal">
+    <div class="hs-head">
+      <div class="eyebrow-dark">Interactive Demo</div>
+      <h2 id="hs-heading">Watch the film reject heat</h2>
+      <p>Select a UV99 film and see how it changes the sunlight hitting the glass, the heat entering the cabin, and how the family inside feels. Figures shown are demonstration values.</p>
+    </div>
+
+    <div class="hs-seg" role="tablist" aria-label="Window film selection">
+      <button class="hs-seg__btn is-active" type="button" role="tab" id="hs-tab-none" aria-controls="hs-stage-region" aria-selected="true" data-state="none">Without Film</button>
+      <button class="hs-seg__btn" type="button" role="tab" id="hs-tab-uv50" aria-controls="hs-stage-region" aria-selected="false" tabindex="-1" data-state="uv50">UV99 50</button>
+      <button class="hs-seg__btn" type="button" role="tab" id="hs-tab-uv70" aria-controls="hs-stage-region" aria-selected="false" tabindex="-1" data-state="uv70">UV99 70</button>
+      <button class="hs-seg__btn" type="button" role="tab" id="hs-tab-pro50" aria-controls="hs-stage-region" aria-selected="false" tabindex="-1" data-state="pro50">UV PRO 50</button>
+      <button class="hs-seg__btn" type="button" role="tab" id="hs-tab-pro70" aria-controls="hs-stage-region" aria-selected="false" tabindex="-1" data-state="pro70">UV PRO 70</button>
+    </div>
+
+    <div class="hs-grid">
+      <div class="hs-stage-card" id="hs-stage-region" role="tabpanel" aria-labelledby="hs-tab-none" tabindex="0">
+        <div class="hs-stage" data-state="none" role="img" aria-label="Cabin heat visualisation">
+          <img class="hs-photo" src="assets/degree2.png.png" alt="" width="1695" height="928" loading="lazy" decoding="async">
+          <div class="hs-wash"></div>
+          <svg class="hs-fx" viewBox="0 0 1690 931" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <radialGradient id="hs-glow-grad" cx="0.5" cy="0.5" r="0.5">
+                <stop offset="0" stop-color="#FFC978" stop-opacity="0.5"/><stop offset="100%" stop-color="#FFC978" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="hs-ray-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#FFE1A0" stop-opacity="0"/><stop offset="35%" stop-color="#FFC061" stop-opacity="0.95"/><stop offset="100%" stop-color="#FF7A3C" stop-opacity="0.12"/>
+              </linearGradient>
+              <linearGradient id="hs-ray-violet" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#E7A8FF" stop-opacity="0"/><stop offset="40%" stop-color="#C86BFF" stop-opacity="0.9"/><stop offset="100%" stop-color="#7A3CFF" stop-opacity="0.1"/>
+              </linearGradient>
+              <linearGradient id="hs-film-grad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#E14FFF"/><stop offset="60%" stop-color="#9B2BAE"/><stop offset="100%" stop-color="#4FE3FF"/>
+              </linearGradient>
+            </defs>
+
+            <!-- sun glow, aligned to the photo's sun -->
+            <circle class="hs-glow" cx="120" cy="90" r="150" fill="url(#hs-glow-grad)"/>
+
+            <!-- UV99 film layer across the windshield glass -->
+            <path class="hs-film" d="M405,415 L1140,338 L1010,775 L180,612 Z"/>
+
+            <!-- heat shimmer along the base of the glass / hood -->
+            <g class="hs-shimmer" fill="none" stroke-linecap="round">
+              <path d="M210,690 q40,-20 80,0 t80,0 t80,0 t80,0 t80,0 t80,0 t80,0 t80,0" stroke="rgba(255,150,90,0.55)" stroke-width="6"/>
+              <path d="M240,660 q40,-20 80,0 t80,0 t80,0 t80,0 t80,0 t80,0 t80,0" stroke="rgba(255,120,70,0.4)" stroke-width="5"/>
+              <path d="M280,632 q40,-18 80,0 t80,0 t80,0 t80,0 t80,0 t80,0" stroke="rgba(255,185,120,0.3)" stroke-width="4"/>
+            </g>
+
+            <!-- heat particles inside the cabin (populated by script) -->
+            <g id="hs-particles"></g>
+
+            <!-- animated sunlight rays (populated by script) -->
+            <g id="hs-rays" transform="translate(110 70)"></g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="hs-panel">
+        <div class="hs-cabin-read">
+          <div class="hs-cabin-label">Cabin temperature</div>
+          <div class="hs-cabin-temp"><span data-out="cabin">62</span><span class="deg">&deg;C</span></div>
+        </div>
+        <span class="hs-mood" data-out="mood" data-state="none">Extremely hot</span>
+        <div class="hs-divider"></div>
+        <div class="hs-stat">
+          <div class="hs-stat__top"><span class="hs-stat__name">Exterior temperature</span><span class="hs-stat__val"><span data-out="exterior">48</span>&deg;C</span></div>
+        </div>
+        <div class="hs-stat">
+          <div class="hs-stat__top"><span class="hs-stat__name">Heat rejected</span><span class="hs-stat__val"><span data-out="heat">0</span>%</span></div>
+          <div class="hs-bar"><div class="hs-bar__fill" data-bar="heat"></div></div>
+        </div>
+        <div class="hs-stat">
+          <div class="hs-stat__top"><span class="hs-stat__name">UV blocked</span><span class="hs-stat__val"><span data-out="uv">0</span>%</span></div>
+          <div class="hs-bar"><div class="hs-bar__fill is-cyan" data-bar="uv"></div></div>
+        </div>
+        <p class="hs-note">Demonstration values only &mdash; to be replaced with certified product data.</p>
+      </div>
+    </div>
+
+    <div class="hs-live" role="status" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ================= COMPARE ================= -->
+<section class="cmp" id="compare">
+  <div class="cmp-inner">
+    <div class="cmp-eyebrow r">UV99 vs. Ordinary</div>
+    <h2 class="cmp-title r d1">The difference<br>is <span class="glass">at the glass</span></h2>
+
+    <div class="cmp-row">
+      <div class="cmp-card pro">
+        <span class="cmp-chip">UV99 Glazing</span>
+        <div class="cmp-stat" data-count="99" data-suffix="%">0%</div>
+        <div class="cmp-statcap">UV-A &amp; UV-B stopped right at the glass — before they ever reach the cabin.</div>
+        <ul class="cmp-list">
+          <li><span class="ic">✓</span>Interior stays protected for years — no fading, no cracking</li>
+          <li><span class="ic">✓</span>Every seat, every passenger shielded on every drive</li>
+          <li><span class="ic">✓</span>Clear optical view and natural light, with zero haze</li>
+        </ul>
+      </div>
+
+      <div class="cmp-card base">
+        <span class="cmp-chip">Ordinary Glass</span>
+        <div class="cmp-stat">~20%</div>
+        <div class="cmp-statcap">UV mostly passes straight through the glass and into the cabin.</div>
+        <ul class="cmp-list">
+          <li><span class="ic">✕</span>Dashboard &amp; seats fade, dry out and crack</li>
+          <li><span class="ic">✕</span>Skin exposed to UV on every drive</li>
+          <li><span class="ic">✕</span>Cabin heats up faster and holds it longer</li>
+        </ul>
+      </div>
+
+      <div class="cmp-vs" aria-hidden="true">VS</div>
+    </div>
+
+    <div class="cmp-summary">
+      <div class="lead-cell">
+        <div class="cmp-sum-big" data-count="99" data-suffix="%">0%</div>
+        <div class="cmp-sum-sub">UV protection</div>
+      </div>
+      <div>
+        <div class="cmp-sum-big">UV-A <span class="amp">+</span> UV-B</div>
+        <div class="cmp-sum-sub">Blocked right at the glass</div>
+      </div>
+      <div>
+        <div class="cmp-sum-big">Clear &amp; Lasting</div>
+        <div class="cmp-sum-sub">Clear optical performance. Long-term interior protection.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ================= PRODUCT VIDEO ================= -->
+<section class="section">
+  <div class="wrap reveal">
+    <div class="eyebrow-dark">See It In Action</div>
+    <h2>How UV99<br>protects your ride</h2>
+    <div class="video-wrapper">
+      <iframe src="https://www.youtube.com/embed/GVbACM2Zhhw" title="UV99 video 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+
+    <div class="video-wrapper">
+      <iframe src="https://www.youtube.com/embed/VBQYjBibX_4" title="UV99 video 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+
+    <div class="video-wrapper">
+      <iframe src="https://www.youtube.com/embed/SIgob7498Ls" title="UV99 video 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEATURES (horizontal scroll) ================= -->
+<section class="section-tight">
+  <div class="wrap reveal">
+    <div class="eyebrow-dark">What You Get</div>
+    <h2>Five things<br>that improve</h2>
+  </div>
+  <div class="wrap">
+    <div class="feature-strip reveal">
+      <div class="feature-pill">
+        <div class="fi">🛡</div>
+        <div class="fp-body">
+          <h3>Interior Protection</h3>
+          <p>Guards dashboard &amp; seats from fading, cracking, deterioration.</p>
+        </div>
+      </div>
+      <div class="feature-pill">
+        <div class="fi">☀</div>
+        <div class="fp-body">
+          <h3>Skin Protection</h3>
+          <p>Shields you and passengers from harmful UV on every drive.</p>
+        </div>
+      </div>
+      <div class="feature-pill">
+        <div class="fi">❄</div>
+        <div class="fp-body">
+          <h3>Enhanced Comfort</h3>
+          <p>A cooler, more pleasant cabin on every trip.</p>
+        </div>
+      </div>
+      <div class="feature-pill">
+        <div class="fi">◐</div>
+        <div class="fp-body">
+          <h3>Glare Reduction</h3>
+          <p>Safer driving in bright, harsh conditions.</p>
+        </div>
+      </div>
+      <div class="feature-pill">
+        <div class="fi">◎</div>
+        <div class="fp-body">
+          <h3>Optical Clarity</h3>
+          <p>Sharp, distortion-free visibility, day and night.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ================= RANGE (interactive tabs) ================= -->
+<section class="section">
+  <div class="wrap reveal">
+    <div class="eyebrow-dark">The Range</div>
+    <h2>Pick your level<br>of protection</h2>
+    <p class="lead">Same UV defense underneath. Choose how much heat rejection and tone you want on top.</p>
+
+    <div class="tabs" role="tablist">
+      <div class="tab active" role="tab" data-target="panel-uv99">UV99 Series</div>
+      <div class="tab" role="tab" data-target="panel-pro">UV PRO Series</div>
+    </div>
+
+    <div class="panel active" id="panel-uv99">
+      <p class="desc">Pure UV protection with a virtually invisible, factory-fitted look.</p>
+      <div class="variant-grid">
+        <div class="variant">
+          <h4>UV99 70</h4>
+          <div class="specbar-row">
+            <div class="specbar-top"><span class="specbar-name">VLT</span><span class="specbar-val mono">70%</span></div>
+            <div class="specbar-track"><div class="specbar-fill" style="width:70%"></div></div>
+          </div>
+          <div class="specbar-row">
+            <div class="specbar-top"><span class="specbar-name">UV Rejected</span><span class="specbar-val mono">99%</span></div>
+            <div class="specbar-track"><div class="specbar-fill uv" style="width:99%"></div></div>
+          </div>
+          <div class="specbar-row">
+            <div class="specbar-top"><span class="specbar-name">Heat Rejection</span><span class="specbar-val mono">30%</span></div>
+            <div class="specbar-track"><div class="specbar-fill" style="width:30%"></div></div>
+          </div>
+        </div>
+        <div class="variant">
+          <h4>UV99 50</h4>
+          <div class="specbar-row">
+            <div class="specbar-top"><span class="specbar-name">VLT</span><span class="specbar-val mono">47%</span></div>
+            <div class="specbar-track"><div class="specbar-fill" style="width:47%"></div></div>
+          </div>
+          <div class="specbar-row">
+            <div class="specbar-top"><span class="specbar-name">UV Rejected</span><span class="specbar-val mono">99%</span></div>
+            <div class="specbar-track"><div class="specbar-fill uv" style="width:99%"></div></div>
+          </div>
+          <div class="specbar-row">
+            <div class="specbar-top"><span class="specbar-name">Heat Rejection</span><span class="specbar-val mono">35%</span></div>
+            <div class="specbar-track"><div class="specbar-fill" style="width:35%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-pro">
+      <p class="desc">Same 99% UV protection, plus advanced infrared heat-rejection for a cooler cabin.</p>
+      <div class="variant-grid">
+        <div class="variant">
+          <h4>UV PRO 70</h4>
+          <div class="specbar-row">
+            <div class="specbar-top"><span class="specbar-name">VLT</span><span class="specbar-val mono">70%</span></div>
+            <div class="specbar-track"><div class="specbar-fill" style="width:70%"></div></div>
+          </div>
+          <div class="specbar-row">
+            <div class="specbar-top"><span class="specbar-name">UV Rejected</span><span class="specbar-val mono">99%</span></div>
+            <div class="specbar-track"><div class="specbar-fill uv" style="width:99%"></div></div>
+          </div>
+          <div class="specbar-row">
+            <div class="specbar-top"><span class="specbar-name">Heat Rejection</span><span class="specbar-val mono">42%</span></div>
+            <div class="specbar-track"><div class="specbar-fill" style="width:42%"></div></div>
+          </div>
+        </div>
+        <div class="variant">
+          <h4>UV PRO 50</h4>
+          <div class="specbar-row">
+            <div class="specbar-top"><span class="specbar-name">VLT</span><span class="specbar-val mono">51%</span></div>
+            <div class="specbar-track"><div class="specbar-fill" style="width:51%"></div></div>
+          </div>
+          <div class="specbar-row">
+            <div class="specbar-top"><span class="specbar-name">UV Rejected</span><span class="specbar-val mono">99%</span></div>
+            <div class="specbar-track"><div class="specbar-fill uv" style="width:99%"></div></div>
+          </div>
+          <div class="specbar-row">
+            <div class="specbar-top"><span class="specbar-name">Heat Rejection</span><span class="specbar-val mono">50%</span></div>
+            <div class="specbar-track"><div class="specbar-fill" style="width:50%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="qc-note">All values averaged from routine QC data · may vary batch to batch (± 5%)</p>
+  </div>
+</section>
+
+
+<!-- ================= WARRANTY ================= -->
+<section class="warranty-band" id="warranty">
+  <div class="warranty-fx" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="wrap reveal">
+    <div class="wnum">
+      <span class="wnum-fig" data-count="3">0</span>
+      <span class="wnum-label">Years Warranty</span>
+    </div>
+    <p>Covers bubbles, adhesive failures, and discoloration — with less than 10% drop in UVR/IRR performance guaranteed.</p>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact-block" id="contact">
+  <div class="contact-fx" aria-hidden="true"></div>
+  <div class="contact-cut" aria-hidden="true"></div>
+  <div class="wrap reveal">
+    <div class="kicker">You Scanned This For A Reason</div>
+    <h2 class="rays-head">
+      <span class="l"><span class="w" style="--d:.24s"><span>Let's</span></span> <span class="w" style="--d:.32s"><span>stop</span></span></span>
+      <span class="l"><span class="w" style="--d:.40s"><span>some</span></span> <span class="w accent" style="--d:.48s"><span>rays.</span></span></span>
+    </h2>
+    <p>DM us your car model or glass size — we'll tell you exactly which series fits and point you to your nearest installer.</p>
+    <a class="handle-btn" href="https://instagram.com/uv99.in" target="_blank" rel="noopener">@uv99.in <span class="ar">→</span></a>
+  </div>
+</section>
+
+<footer>
+  <p>UV99 Glazing — Harmful rays out, protection in</p>
+  <p>&copy; 2026 UV99. All rights reserved.</p>
+</footer>
+
+<!-- ================= STICKY BAR ================= -->
+<div class="callbar">
+  <div class="callbar-inner">
+    <a class="btn btn-ghost" href="#panel-uv99">See Range</a>
+    <a class="btn btn-primary" href="https://instagram.com/uv99.in" target="_blank" rel="noopener">Message Us</a>
+  </div>
+</div>
+
+<script>
+  // Tab switching
+  document.querySelectorAll('.tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.target).classList.add('active');
+    });
+  });
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Split the warranty label into per-letter spans (stagger via --i)
+  const wLabel = document.querySelector('.wnum-label');
+  if(wLabel){
+    const txt = wLabel.textContent.trim();
+    wLabel.textContent = '';
+    [...txt].forEach((ch,i)=>{
+      const s = document.createElement('span');
+      s.textContent = ch === ' ' ? ' ' : ch;
+      s.style.setProperty('--i', i);
+      wLabel.appendChild(s);
+    });
+  }
+
+  // Count-up for the warranty figure
+  function runWarrantyCount(band){
+    const fig = band.querySelector('.wnum-fig');
+    if(!fig) return;
+    const target = parseInt(fig.dataset.count, 10) || 0;
+    if(reduceMotion){ fig.textContent = target; return; }
+    const dur = 950, start = performance.now();
+    (function tick(now){
+      const p = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      fig.textContent = Math.round(eased * target);
+      if(p < 1) requestAnimationFrame(tick);
+      else fig.textContent = target;
+    })(start);
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal, .warranty-band, .contact-block');
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('in');
+          if(e.target.classList.contains('warranty-band')) runWarrantyCount(e.target);
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.12});
+    revealEls.forEach(el=>io.observe(el));
+  } else {
+    revealEls.forEach(el=>el.classList.add('in'));
+    const b = document.querySelector('.warranty-band');
+    if(b) runWarrantyCount(b);
+  }
+
+  // ---- Premium compare section: reveal choreography + stat count-up ----
+  (function(){
+    const cmp = document.querySelector('.cmp');
+    if(!cmp) return;
+
+    function countUp(el){
+      const target = parseFloat(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      if(reduceMotion){ el.textContent = target + suffix; return; }
+      const dur = 1500, start = performance.now();
+      (function tick(now){
+        const p = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(eased * target) + suffix;
+        if(p < 1) requestAnimationFrame(tick);
+        else el.textContent = target + suffix;
+      })(start);
+    }
+
+    function activate(){
+      cmp.classList.add('in');
+      const stats = cmp.querySelectorAll('[data-count]');
+      // hold the count-up until the cards have slid in
+      setTimeout(()=>stats.forEach(countUp), reduceMotion ? 0 : 650);
+    }
+
+    if('IntersectionObserver' in window){
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){ activate(); io.disconnect(); }
+        });
+      }, {threshold:0.22});
+      io.observe(cmp);
+    } else {
+      activate();
+    }
+  })();
+
+  // ---- Range spec bars: fast count-up + bar refill on reveal / tab switch ----
+  (function(){
+    const panels = document.querySelectorAll('#panel-uv99, #panel-pro');
+    if(!panels.length) return;
+
+    function animateVal(el){
+      if(!el.dataset.raw) el.dataset.raw = el.textContent.trim();
+      const m = /([\d.]+)/.exec(el.dataset.raw);
+      if(!m) return;
+      const target = parseFloat(m[1]);
+      const suffix = el.dataset.raw.replace(/[\d.]/g,'') || '%';
+      if(reduceMotion){ el.textContent = target + suffix; return; }
+      const dur = 600, start = performance.now();
+      el.textContent = '0' + suffix;
+      (function tick(now){
+        const p = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(eased * target) + suffix;
+        if(p < 1) requestAnimationFrame(tick);
+        else el.textContent = target + suffix;
+      })(start);
+    }
+
+    function refillBar(el){
+      if(reduceMotion) return;
+      el.style.animation = 'none';
+      void el.offsetWidth;            // force reflow so the keyframes restart
+      el.style.animation = '';
+    }
+
+    function play(panel){
+      panel.querySelectorAll('.specbar-val').forEach(animateVal);
+      panel.querySelectorAll('.specbar-fill').forEach(refillBar);
+    }
+
+    const section = panels[0].closest('.section') || panels[0].parentElement;
+    if('IntersectionObserver' in window){
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            const active = document.querySelector('.panel.active') || panels[0];
+            play(active);
+            io.disconnect();
+          }
+        });
+      }, {threshold:0.25});
+      io.observe(section);
+    } else {
+      panels.forEach(play);
+    }
+
+    // Re-run when a tab is selected (runs after the existing handler toggles .active)
+    document.querySelectorAll('.tabs .tab').forEach(tab=>{
+      tab.addEventListener('click', ()=>{
+        const t = document.getElementById(tab.dataset.target);
+        if(t) play(t);
+      });
+    });
+  })();
+
+  // ---- Heat-rejection simulator ----
+  (function(){
+    var root = document.getElementById('heatsim');
+    if(!root) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* Demonstration data — swap these for certified product data later.
+       Keep the shape identical: one entry per selectable film state.
+       `photo` = base image for that state (Without Film shows the warm,
+       untinted shot; every film state shows the tinted shot). */
+    var PHOTO_BARE  = 'assets/degree2.png.png';
+    var PHOTO_FILM  = 'assets/DEGREE.png';
+    var FILM_CONFIG = {
+      none:  { label:'Without Film', photo:PHOTO_BARE, exterior:48, cabin:62, heatRejected:0,  uvBlocked:0,  cabinState:'Extremely hot',    raysIn:9, raysReflected:0,  particles:14 },
+      uv50:  { label:'UV99 50',      photo:PHOTO_FILM, exterior:48, cabin:43, heatRejected:55, uvBlocked:99, cabinState:'Comfortable',       raysIn:4, raysReflected:6,  particles:5  },
+      uv70:  { label:'UV99 70',      photo:PHOTO_FILM, exterior:48, cabin:36, heatRejected:70, uvBlocked:99, cabinState:'Noticeably cooler', raysIn:2, raysReflected:9,  particles:0  },
+      pro50: { label:'UV PRO 50',    photo:PHOTO_FILM, exterior:48, cabin:34, heatRejected:80, uvBlocked:99, cabinState:'Cool and comfortable', raysIn:2, raysReflected:10, particles:0 },
+      pro70: { label:'UV PRO 70',    photo:PHOTO_FILM, exterior:48, cabin:32, heatRejected:88, uvBlocked:99, cabinState:'Coolest cabin',        raysIn:1, raysReflected:11, particles:0 }
+    };
+    var RAY_POOL = 12;
+    var SVGNS = 'http://www.w3.org/2000/svg';
+
+    var stage    = root.querySelector('.hs-stage');
+    var photoEl  = root.querySelector('.hs-photo');
+    var panel    = root.querySelector('#hs-stage-region');
+    var btns     = Array.prototype.slice.call(root.querySelectorAll('.hs-seg__btn'));
+    var rayLayer = root.querySelector('#hs-rays');
+    var partLayer= root.querySelector('#hs-particles');
+    var live     = root.querySelector('.hs-live');
+    var heatBar  = root.querySelector('[data-bar="heat"]');
+    var uvBar    = root.querySelector('[data-bar="uv"]');
+    var out = {
+      cabin:    root.querySelector('[data-out="cabin"]'),
+      exterior: root.querySelector('[data-out="exterior"]'),
+      heat:     root.querySelector('[data-out="heat"]'),
+      uv:       root.querySelector('[data-out="uv"]'),
+      mood:     root.querySelector('[data-out="mood"]')
+    };
+
+    // Fixed pool of rays built once; switching states only toggles classes,
+    // so rapid clicking can never leave a ray mid-transition in a bad state.
+    var rays = [];
+    for(var i=0;i<RAY_POOL;i++){
+      var g = document.createElementNS(SVGNS,'g');
+      g.setAttribute('class','hs-ray is-off');
+      g.style.setProperty('--x', (-190 + (380/(RAY_POOL-1))*i).toFixed(1) + 'px');
+      g.style.setProperty('--delay', (i*0.17).toFixed(2) + 's');
+      var beam = document.createElementNS(SVGNS,'rect');
+      beam.setAttribute('class','hs-ray__beam');
+      beam.setAttribute('x','-2.4'); beam.setAttribute('y','0');
+      beam.setAttribute('width','4.8'); beam.setAttribute('height','150'); beam.setAttribute('rx','2.4');
+      g.appendChild(beam);
+      rayLayer.appendChild(g);
+      rays.push(g);
+    }
+
+    // Interruptible ease-out count. Cancels any in-flight tween on the same node.
+    function animateNum(el, to){
+      if(!el) return;
+      var from = parseFloat((el.textContent || '0').replace(/[^0-9.\-]/g,'')) || 0;
+      if(el._raf){ cancelAnimationFrame(el._raf); el._raf = 0; }
+      if(reduce || from === to){ el.textContent = String(Math.round(to)); return; }
+      var dur = 900, t0 = performance.now();
+      function step(now){
+        var p = Math.min((now - t0) / dur, 1);
+        var e = 1 - Math.pow(1 - p, 3);
+        el.textContent = String(Math.round(from + (to - from) * e));
+        el._raf = p < 1 ? requestAnimationFrame(step) : 0;
+      }
+      el._raf = requestAnimationFrame(step);
+    }
+
+    function renderParticles(n){
+      if(!partLayer) return;
+      while(partLayer.firstChild) partLayer.removeChild(partLayer.firstChild);
+      if(reduce) return;
+      for(var k=0;k<n;k++){
+        var c = document.createElementNS(SVGNS,'circle');
+        c.setAttribute('cx', (392 + Math.random()*250).toFixed(1));
+        c.setAttribute('cy', (292 + Math.random()*52).toFixed(1));
+        c.setAttribute('r', (2.2 + Math.random()*2).toFixed(1));
+        c.setAttribute('class','hs-particle');
+        c.style.setProperty('--pd', (Math.random()*3).toFixed(2) + 's');
+        c.style.setProperty('--px', (Math.random()*16 - 8).toFixed(1) + 'px');
+        partLayer.appendChild(c);
+      }
+    }
+
+    function setState(key, moveFocus){
+      var cfg = FILM_CONFIG[key];
+      if(!cfg) return;
+
+      btns.forEach(function(b){
+        var on = b.dataset.state === key;
+        b.setAttribute('aria-selected', on ? 'true' : 'false');
+        b.tabIndex = on ? 0 : -1;
+        b.classList.toggle('is-active', on);
+        if(on && panel) panel.setAttribute('aria-labelledby', b.id);
+      });
+      if(moveFocus){
+        var active = btns.filter(function(b){ return b.dataset.state === key; })[0];
+        if(active) active.focus();
+      }
+
+      root.setAttribute('data-state', key);
+      stage.setAttribute('data-state', key);
+
+      if(photoEl && cfg.photo){
+        var nextSrc = cfg.photo;
+        var curSrc = photoEl.getAttribute('src');
+        if(curSrc !== nextSrc && !(photoEl.currentSrc && photoEl.currentSrc.indexOf(nextSrc) !== -1)){
+          photoEl.setAttribute('src', nextSrc);
+        }
+      }
+
+      animateNum(out.cabin, cfg.cabin);
+      animateNum(out.heat, cfg.heatRejected);
+      animateNum(out.uv, cfg.uvBlocked);
+      if(out.exterior) out.exterior.textContent = String(cfg.exterior);
+      if(heatBar) heatBar.style.transform = 'scaleX(' + (cfg.heatRejected / 100) + ')';
+      if(uvBar)   uvBar.style.transform   = 'scaleX(' + (cfg.uvBlocked / 100) + ')';
+      if(out.mood){ out.mood.textContent = cfg.cabinState; out.mood.dataset.state = key; }
+
+      for(var r=0;r<rays.length;r++){
+        rays[r].classList.remove('is-pass','is-reflect','is-off');
+        if(r < cfg.raysIn) rays[r].classList.add('is-pass');
+        else if(r < cfg.raysIn + cfg.raysReflected) rays[r].classList.add('is-reflect');
+        else rays[r].classList.add('is-off');
+      }
+
+      renderParticles(cfg.particles);
+
+      stage.setAttribute('aria-label',
+        cfg.label + ' selected. Exterior ' + cfg.exterior + ' degrees Celsius, cabin ' +
+        cfg.cabin + ' degrees Celsius, ' + cfg.cabinState.toLowerCase() +
+        '. Heat rejected ' + cfg.heatRejected + ' percent, UV blocked ' + cfg.uvBlocked + ' percent.');
+      if(live){
+        live.textContent = cfg.label + ' — cabin temperature ' + cfg.cabin + ' degrees Celsius, ' +
+          cfg.cabinState.toLowerCase() + '. Heat rejected ' + cfg.heatRejected +
+          ' percent, UV blocked ' + cfg.uvBlocked + ' percent.';
+      }
+    }
+
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){ setState(b.dataset.state, false); });
+      b.addEventListener('keydown', function(e){
+        var idx = btns.indexOf(b), next = null;
+        if(e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (idx + 1) % btns.length;
+        else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (idx - 1 + btns.length) % btns.length;
+        else if(e.key === 'Home') next = 0;
+        else if(e.key === 'End') next = btns.length - 1;
+        if(next !== null){ e.preventDefault(); setState(btns[next].dataset.state, true); }
+      });
+    });
+
+    setState('none', false);
+
+    // warm the film-state photo so the first switch doesn't flash
+    if(photoEl){ var pre = new Image(); pre.src = PHOTO_FILM; }
+  })();
+</script>
+
+</body>
+</html>
