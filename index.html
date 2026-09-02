@@ -2,6 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>
+/* Mount-point base URL. When this page is reverse-proxied under /QR on the
+   main UV99 site, pin all relative asset URLs (assets/...) to that prefix so
+   CSS, JS and images resolve correctly with or without a trailing slash.
+   Served standalone on uv99-qr.vercel.app this is a no-op. Must stay the first
+   node in <head> so the <base> exists before any <link>/<style>/<img> is parsed. */
+(function () {
+  var underQR = /^\/QR(?=\/|$)/.test(location.pathname);
+  var base = document.createElement("base");
+  base.href = (underQR ? "/QR" : "") + "/";
+  document.head.insertBefore(base, document.head.firstChild);
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>UV99 Glazing | The Rays Stop Here</title>
 <meta name="description" content="UV99 Glazing — advanced UV-defense glazing that blocks up to 99% of harmful UV-A and UV-B rays. UV99 and UV PRO series.">
@@ -1045,6 +1058,68 @@
   <div class="scroll-cue"><span>Scroll</span><span class="line"></span></div>
 </section>
 
+<style id="uvp-style">
+  /* ===== UV99 — UV-radiation rejection overlay (canvas layer over the photo) ===== */
+  .hs-stage #hs-rays{ display:none; }          /* premium canvas beams replace the old SVG rays */
+  .hs-stage .hs-shimmer{ display:none; }        /* drop the old squiggle heat-shimmer */
+  .uvp-canvas{
+    position:absolute; inset:0; width:100%; height:100%;
+    z-index:4; pointer-events:none; display:block;
+  }
+  .uvp-badge{
+    position:absolute; left:5%; top:30%;
+    z-index:5; pointer-events:none;
+    display:flex; flex-direction:column; gap:5px;
+    padding:11px 15px 12px;
+    font-family:'Manrope',system-ui,-apple-system,sans-serif;
+    color:#fff;
+    background:linear-gradient(180deg, rgba(18,10,26,0.52), rgba(11,7,17,0.44));
+    border:1px solid rgba(226,180,255,0.24);
+    border-radius:13px;
+    -webkit-backdrop-filter:blur(11px) saturate(1.3);
+            backdrop-filter:blur(11px) saturate(1.3);
+    box-shadow:0 14px 40px -16px rgba(0,0,0,0.72), inset 0 1px 0 rgba(255,255,255,0.06);
+    transition:border-color .3s ease, box-shadow .3s ease;
+  }
+  .uvp-badge__row{ display:flex; align-items:center; gap:7px; }
+  .uvp-dot{
+    width:6px; height:6px; border-radius:50%;
+    background:#E14FFF; box-shadow:0 0 10px 2px rgba(225,79,255,0.9);
+    animation:uvp-pulse 2.4s ease-in-out infinite;
+  }
+  .uvp-badge__title{
+    font-size:10px; font-weight:700; letter-spacing:0.19em; text-transform:uppercase;
+    color:#e7c6ff;
+  }
+  .uvp-badge__big{
+    font-size:clamp(12px,1.5vw,14.5px); font-weight:800; letter-spacing:0.01em; color:#fff;
+  }
+  .uvp-badge__ind{
+    margin-top:1px;
+    font-family:'JetBrains Mono','Manrope',monospace;
+    font-size:9.5px; letter-spacing:0.13em; text-transform:uppercase;
+  }
+  .uvp-ind__txt{
+    color:rgba(255,255,255,0.62); white-space:nowrap;
+    transition:color .2s ease, text-shadow .2s ease;
+  }
+  .uvp-badge.is-hit{
+    border-color:rgba(124,255,196,0.5);
+    box-shadow:0 16px 46px -14px rgba(0,0,0,0.72), 0 0 22px -4px rgba(124,255,196,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .uvp-badge.is-hit .uvp-ind__txt{ color:#7CFFC4; text-shadow:0 0 12px rgba(124,255,196,0.6); }
+  @keyframes uvp-pulse{ 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.4;transform:scale(.78);} }
+  @media (max-width:560px){
+    .uvp-badge{ left:4%; top:23%; padding:8px 11px 9px; border-radius:11px; gap:3px; }
+    .uvp-badge__title{ font-size:8.5px; letter-spacing:0.15em; }
+    .uvp-badge__ind{ font-size:8px; height:11px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .uvp-dot{ animation:none; }
+    .uvp-badge,.uvp-badge__ind > span{ transition:none; }
+  }
+</style>
+
 <!-- ================= HEAT-REJECTION SIMULATOR ================= -->
 <section class="hs" id="heatsim" data-state="none" aria-labelledby="hs-heading">
   <div class="hs-wrap reveal">
@@ -1065,7 +1140,7 @@
     <div class="hs-grid">
       <div class="hs-stage-card" id="hs-stage-region" role="tabpanel" aria-labelledby="hs-tab-none" tabindex="0">
         <div class="hs-stage" data-state="none" role="img" aria-label="Cabin heat visualisation">
-          <img class="hs-photo" src="assets/degree2.png.png" alt="" width="1695" height="928" loading="lazy" decoding="async">
+          <img class="hs-photo" src="assets/new%20car.png" alt="" width="1689" height="931" loading="lazy" decoding="async">
           <div class="hs-wash"></div>
           <svg class="hs-fx" viewBox="0 0 1690 931" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
@@ -1102,6 +1177,17 @@
             <!-- animated sunlight rays (populated by script) -->
             <g id="hs-rays" transform="translate(110 70)"></g>
           </svg>
+
+          <!-- ===== UV radiation → window impact → rejection overlay ===== -->
+          <canvas class="uvp-canvas" aria-hidden="true"></canvas>
+          <div class="uvp-badge" aria-hidden="true">
+            <div class="uvp-badge__row">
+              <span class="uvp-dot"></span>
+              <span class="uvp-badge__title">UV99 Protection</span>
+            </div>
+            <div class="uvp-badge__big">99% UV Rejection</div>
+            <div class="uvp-badge__ind"><span class="uvp-ind__txt">UV Rays &rarr; Rejected</span></div>
+          </div>
         </div>
       </div>
 
@@ -1533,8 +1619,8 @@
        Keep the shape identical: one entry per selectable film state.
        `photo` = base image for that state (Without Film shows the warm,
        untinted shot; every film state shows the tinted shot). */
-    var PHOTO_BARE  = 'assets/degree2.png.png';
-    var PHOTO_FILM  = 'assets/DEGREE.png';
+    var PHOTO_BARE  = 'assets/new%20car.png';
+    var PHOTO_FILM  = 'assets/new%20car.png';
     var FILM_CONFIG = {
       none:  { label:'Without Film', photo:PHOTO_BARE, exterior:48, cabin:62, heatRejected:0,  uvBlocked:0,  cabinState:'Extremely hot',    raysIn:9, raysReflected:0,  particles:14 },
       uv50:  { label:'UV99 50',      photo:PHOTO_FILM, exterior:48, cabin:43, heatRejected:55, uvBlocked:99, cabinState:'Comfortable',       raysIn:4, raysReflected:6,  particles:5  },
@@ -1683,6 +1769,375 @@
     // warm the film-state photo so the first switch doesn't flash
     if(photoEl){ var pre = new Image(); pre.src = PHOTO_FILM; }
   })();
+</script>
+
+<script>
+/* ============================================================
+   UV99 — continuous UV-radiation rejection overlay
+   Sun ► thin UV beams travel to the UV99 windshield ► impact
+   flash + sparks ► beams reflect back outward ► loop forever.
+   Pure <canvas> layer above the photo; the car is never touched.
+   ------------------------------------------------------------
+   Tune everything from CONFIG below (also on window.UVP_CONFIG):
+     rayCount        rays alive at once (approach + impact + reflect)
+     spawnGapMs      [min,max] ms between new rays
+     approachSpeed   path-fractions / second travelling in
+     reflectSpeed    path-fractions / second travelling out
+     rayLenIn/Out    beam length as a fraction of the sun→hit span
+     reflectDistance how far rejected beams fly back out
+     rayWidth        core beam width (px, base scale)
+     glow            beam glow blur (px, base scale)
+     impactMs        flash duration
+     sparkCount      [min,max] sparks per impact
+     rimGlow         resting highlight strength around the window
+     cabinCool       resting cool tint inside the glass (0 = off)
+     sun / window    positions normalised to the photo (0..1)
+   ============================================================ */
+(function(){
+  var root   = document.getElementById('heatsim');
+  if(!root) return;
+  var stage  = root.querySelector('.hs-stage');
+  var canvas = root.querySelector('.uvp-canvas');
+  var badge  = root.querySelector('.uvp-badge');
+  var badgeTxt = root.querySelector('.uvp-ind__txt');
+  var photo  = root.querySelector('.hs-photo');
+  if(!stage || !canvas) return;
+  var ctx = canvas.getContext('2d');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var CONFIG = {
+    rayCount:        9,
+    spawnGapMs:      [210, 480],
+    approachSpeed:   0.92,
+    reflectSpeed:    1.35,
+    rayLenIn:        0.19,
+    rayLenOut:       0.24,
+    reflectDistance: 0.60,
+    rayWidth:        2.9,
+    glow:            21,
+    impactMs:        240,
+    sparkCount:      [6, 10],
+    rimGlow:         0.10,
+    cabinCool:       0.06,
+    sunSpread:       0.05,
+    sun:    [0.042, 0.065],
+    window: [[0.145,0.435],[0.605,0.398],[0.663,0.560],[0.455,0.720],[0.305,0.796],[0.152,0.640]]
+  };
+  window.UVP_CONFIG = CONFIG;
+
+  var IMG_AR = 1689 / 931;
+  var W = 0, H = 0, map = null, baseK = 1;
+
+  function resize(){
+    var r = stage.getBoundingClientRect();
+    if(!r.width || !r.height) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = r.width; H = r.height;
+    canvas.width  = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // reproduce object-fit:cover so normalised photo coords land exactly
+    var boxAR = W / H, s, ox, oy;
+    if(boxAR > IMG_AR){ s = W / 1689; ox = 0; oy = (H - 931 * s) / 2; }
+    else              { s = H / 931;  oy = 0; ox = (W - 1689 * s) / 2; }
+    map = function(n){ return [ox + n[0] * 1689 * s, oy + n[1] * 931 * s]; };
+    baseK = Math.max(0.62, Math.min(2.1, Math.min(W, H) / 520));
+    if(reduce) drawStatic();
+  }
+
+  function lerp(a,b,t){ return a + (b - a) * t; }
+  function dist(ax,ay,bx,by){ var dx = bx - ax, dy = by - ay; return Math.sqrt(dx*dx + dy*dy); }
+  function polyPx(){ return CONFIG.window.map(map); }
+  function inPoly(px,py,poly){
+    var inside = false;
+    for(var i = 0, j = poly.length - 1; i < poly.length; j = i++){
+      var xi = poly[i][0], yi = poly[i][1], xj = poly[j][0], yj = poly[j][1];
+      if(((yi > py) !== (yj > py)) && (px < (xj - xi) * (py - yi) / (yj - yi) + xi)) inside = !inside;
+    }
+    return inside;
+  }
+  function randHit(poly){
+    var minx = 1e9, miny = 1e9, maxx = -1e9, maxy = -1e9;
+    for(var i = 0; i < poly.length; i++){
+      var p = poly[i];
+      if(p[0] < minx) minx = p[0]; if(p[0] > maxx) maxx = p[0];
+      if(p[1] < miny) miny = p[1]; if(p[1] > maxy) maxy = p[1];
+    }
+    for(var k = 0; k < 24; k++){
+      var x = lerp(minx, maxx, Math.random()), y = lerp(miny, maxy, Math.random());
+      if(inPoly(x, y, poly)) return [x, y];
+    }
+    var cx = 0, cy = 0;
+    for(var m = 0; m < poly.length; m++){ cx += poly[m][0]; cy += poly[m][1]; }
+    return [cx / poly.length, cy / poly.length];
+  }
+
+  var rays = [], sparks = [], flashes = [];
+  var running = false, lastT = 0, lastSpawn = 0, nextGap = 0;
+  var rimHot = 0, coolHot = 0, badgeCooldown = 0;
+
+  function spawnRay(){
+    var origin = map([
+      CONFIG.sun[0] + (Math.random() * 2 - 1) * CONFIG.sunSpread,
+      CONFIG.sun[1] + (Math.random() * 2 - 1) * CONFIG.sunSpread * 0.6
+    ]);
+    var hit = randHit(polyPx());
+    var D = dist(origin[0], origin[1], hit[0], hit[1]) || 1;
+    var back = Math.atan2(origin[1] - hit[1], origin[0] - hit[0]);
+    var rang = back + (-30 + Math.random() * 42) * Math.PI / 180;
+    rays.push({
+      ph:'in', t:0,
+      ox:origin[0], oy:origin[1], hx:hit[0], hy:hit[1], D:D,
+      rdx:Math.cos(rang), rdy:Math.sin(rang),
+      spd:  CONFIG.approachSpeed * (0.80 + Math.random() * 0.55),
+      rspd: CONFIG.reflectSpeed  * (0.85 + Math.random() * 0.45),
+      lenIn:  CONFIG.rayLenIn  * (0.8 + Math.random() * 0.5),
+      lenOut: CONFIG.rayLenOut * (0.8 + Math.random() * 0.5),
+      seed: Math.random() * 100
+    });
+  }
+
+  function impact(r, now){
+    rimHot  = Math.min(1, rimHot + 0.9);
+    coolHot = Math.min(1, coolHot + 0.7);
+    flashes.push({ x:r.hx, y:r.hy, t:0 });
+    var n = CONFIG.sparkCount[0] + ((Math.random() * (CONFIG.sparkCount[1] - CONFIG.sparkCount[0])) | 0);
+    for(var i = 0; i < n; i++){
+      var a = Math.atan2(r.rdy, r.rdx) + (Math.random() * 2 - 1) * 0.9;
+      var sp = (40 + Math.random() * 130) * baseK;
+      sparks.push({
+        x:r.hx, y:r.hy,
+        vx:Math.cos(a) * sp, vy:Math.sin(a) * sp - 10 * baseK,
+        life:0, max:0.35 + Math.random() * 0.4, r:(0.8 + Math.random() * 1.6) * baseK
+      });
+    }
+    if(badge && now > badgeCooldown){
+      badgeCooldown = now + 360;
+      badge.classList.add('is-hit');
+      if(badgeTxt) badgeTxt.textContent = 'Rejected ✓';
+      setTimeout(function(){
+        badge.classList.remove('is-hit');
+        if(badgeTxt) badgeTxt.textContent = 'UV Rays → Rejected';
+      }, 280);
+    }
+  }
+
+  function beam(x1,y1,x2,y2,w,c0,c1,a){
+    var g = ctx.createLinearGradient(x1, y1, x2, y2);
+    g.addColorStop(0, c0); g.addColorStop(1, c1);
+    ctx.strokeStyle = g; ctx.lineWidth = w; ctx.lineCap = 'round';
+    ctx.globalAlpha = a;
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  function drawRay(r, now){
+    var flick = 0.82 + 0.18 * Math.sin(now * 0.018 + r.seed);
+    var w = CONFIG.rayWidth * baseK;
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    if(r.ph === 'in'){
+      var e = r.t, te = Math.max(0, e - r.lenIn);
+      var hx = lerp(r.ox, r.hx, e),  hy = lerp(r.oy, r.hy, e);
+      var tx = lerp(r.ox, r.hx, te), ty = lerp(r.oy, r.hy, te);
+      ctx.shadowColor = 'rgba(197,120,255,0.9)';
+      ctx.shadowBlur = CONFIG.glow * baseK;
+      beam(tx, ty, hx, hy, w * 2.4, 'rgba(150,90,255,0)', 'rgba(210,170,255,0.30)', 0.5 * flick);
+      ctx.shadowBlur = 0;
+      beam(tx, ty, hx, hy, w, 'rgba(190,150,255,0)', 'rgba(255,255,255,0.95)', 0.9 * flick);
+      var hg = ctx.createRadialGradient(hx, hy, 0, hx, hy, w * 3.2);
+      hg.addColorStop(0, 'rgba(255,255,255,0.95)');
+      hg.addColorStop(0.4, 'rgba(224,120,255,0.55)');
+      hg.addColorStop(1, 'rgba(224,120,255,0)');
+      ctx.fillStyle = hg;
+      ctx.beginPath(); ctx.arc(hx, hy, w * 3.2, 0, Math.PI * 2); ctx.fill();
+    } else {
+      var u = r.t, ease = 1 - Math.pow(1 - u, 2), far = r.D * CONFIG.reflectDistance;
+      var re = Math.max(0, ease - r.lenOut), fade = (1 - u) * (1 - u);
+      var hx2 = r.hx + r.rdx * far * ease, hy2 = r.hy + r.rdy * far * ease;
+      var tx2 = r.hx + r.rdx * far * re,   ty2 = r.hy + r.rdy * far * re;
+      var w2 = w * (1.0 - 0.4 * u);
+      ctx.shadowColor = 'rgba(200,110,255,0.9)';
+      ctx.shadowBlur = CONFIG.glow * baseK * 0.9;
+      beam(tx2, ty2, hx2, hy2, w2 * 2.3, 'rgba(196,107,255,0)', 'rgba(220,150,255,' + (0.5 * fade) + ')', 0.8 * flick);
+      ctx.shadowBlur = 0;
+      beam(tx2, ty2, hx2, hy2, w2, 'rgba(196,107,255,0)', 'rgba(242,210,255,' + (0.95 * fade) + ')', 0.85 * flick);
+    }
+    ctx.restore();
+  }
+
+  function tracePoly(poly){
+    ctx.beginPath();
+    ctx.moveTo(poly[0][0], poly[0][1]);
+    for(var i = 1; i < poly.length; i++) ctx.lineTo(poly[i][0], poly[i][1]);
+    ctx.closePath();
+  }
+
+  function drawRim(){
+    var glow = CONFIG.rimGlow + rimHot * 0.7;
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    tracePoly(polyPx());
+    ctx.strokeStyle = 'rgba(226,120,255,' + (0.08 + glow * 0.45) + ')';
+    ctx.lineWidth = (1.1 + glow * 4) * baseK;
+    ctx.lineJoin = 'round';
+    ctx.shadowColor = 'rgba(226,120,255,0.9)';
+    ctx.shadowBlur = (9 + glow * 30) * baseK;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawCabinCool(){
+    var a = CONFIG.cabinCool + coolHot * 0.08;
+    if(a <= 0) return;
+    ctx.save();
+    tracePoly(polyPx());
+    ctx.clip();
+    var g = ctx.createLinearGradient(0, H * 0.35, 0, H * 0.9);
+    g.addColorStop(0, 'rgba(120,150,205,' + (a * 0.5) + ')');
+    g.addColorStop(1, 'rgba(90,120,180,' + a + ')');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+  }
+
+  function drawSun(){
+    var s = map(CONFIG.sun), rad = 150 * baseK;
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    var g = ctx.createRadialGradient(s[0], s[1], 0, s[0], s[1], rad);
+    g.addColorStop(0, 'rgba(255,246,231,0.48)');
+    g.addColorStop(0.5, 'rgba(255,212,172,0.15)');
+    g.addColorStop(1, 'rgba(255,212,172,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(s[0], s[1], rad, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+
+  function drawFlash(f){
+    var k = f.t, rad = lerp(3, 38, k) * baseK;
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    var g = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, rad);
+    g.addColorStop(0, 'rgba(255,255,255,' + (1.0 * (1 - k)) + ')');
+    g.addColorStop(0.25, 'rgba(240,180,255,' + (0.7 * (1 - k)) + ')');
+    g.addColorStop(1, 'rgba(230,150,255,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(f.x, f.y, rad, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = 'rgba(255,240,255,' + (0.45 * (1 - k)) + ')';
+    ctx.lineWidth = 1.5 * baseK;
+    ctx.beginPath(); ctx.arc(f.x, f.y, rad * 0.9, 0, Math.PI * 2); ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawSpark(s){
+    var k = s.life / s.max;
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.globalAlpha = 1 - k;
+    ctx.fillStyle = k < 0.5 ? 'rgba(255,255,255,0.95)' : 'rgba(226,150,255,0.9)';
+    ctx.beginPath(); ctx.arc(s.x, s.y, s.r * (1 - k * 0.5), 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+
+  function render(now){
+    ctx.clearRect(0, 0, W, H);
+    drawCabinCool();
+    drawSun();
+    drawRim();
+    for(var i = 0; i < rays.length; i++)    drawRay(rays[i], now);
+    for(var j = 0; j < flashes.length; j++) drawFlash(flashes[j]);
+    for(var s = 0; s < sparks.length; s++)  drawSpark(sparks[s]);
+  }
+
+  function frame(now){
+    if(!running) return;
+    var dt = Math.min((now - lastT) / 1000, 0.05); lastT = now;
+
+    if(now - lastSpawn > nextGap && rays.length < CONFIG.rayCount){
+      spawnRay();
+      lastSpawn = now;
+      nextGap = CONFIG.spawnGapMs[0] + Math.random() * (CONFIG.spawnGapMs[1] - CONFIG.spawnGapMs[0]);
+    }
+
+    for(var i = rays.length - 1; i >= 0; i--){
+      var r = rays[i];
+      if(r.ph === 'in'){
+        r.t += r.spd * dt;
+        if(r.t >= 1){ r.t = 0; r.ph = 'out'; impact(r, now); }
+      } else {
+        r.t += r.rspd * dt;
+        if(r.t >= 1) rays.splice(i, 1);
+      }
+    }
+    for(var f = flashes.length - 1; f >= 0; f--){
+      flashes[f].t += dt / (CONFIG.impactMs / 1000);
+      if(flashes[f].t >= 1) flashes.splice(f, 1);
+    }
+    for(var p = sparks.length - 1; p >= 0; p--){
+      var s = sparks[p];
+      s.life += dt;
+      s.x += s.vx * dt; s.y += s.vy * dt;
+      s.vy += 120 * baseK * dt; s.vx *= 0.98;
+      if(s.life >= s.max) sparks.splice(p, 1);
+    }
+    rimHot  *= Math.pow(0.06, dt);
+    coolHot *= Math.pow(0.12, dt);
+
+    render(now);
+    requestAnimationFrame(frame);
+  }
+
+  function drawStatic(){
+    if(!map) return;
+    var poly = polyPx(), sun = map(CONFIG.sun);
+    rimHot = 0.35; coolHot = 0;
+    ctx.clearRect(0, 0, W, H);
+    drawCabinCool(); drawSun(); drawRim();
+    for(var i = 0; i < 5; i++){
+      var hit = randHit(poly), t = 0.44 + i * 0.04;
+      var hx = lerp(sun[0], hit[0], t),        hy = lerp(sun[1], hit[1], t);
+      var tx = lerp(sun[0], hit[0], t - 0.16), ty = lerp(sun[1], hit[1], t - 0.16);
+      ctx.save(); ctx.globalCompositeOperation = 'lighter';
+      beam(tx, ty, hx, hy, CONFIG.rayWidth * baseK, 'rgba(190,150,255,0)', 'rgba(255,255,255,0.82)', 0.8);
+      ctx.restore();
+    }
+  }
+
+  function onScreen(){
+    var r = root.getBoundingClientRect();
+    return r.bottom > 0 && r.top < (window.innerHeight || document.documentElement.clientHeight);
+  }
+  function start(){
+    if(running || reduce) return;
+    running = true; lastT = performance.now();
+    requestAnimationFrame(frame);
+  }
+  function stop(){ running = false; }
+  window.UVP = { config: CONFIG, start: start, stop: stop, resize: resize };
+
+  if('ResizeObserver' in window) new ResizeObserver(resize).observe(stage);
+  else window.addEventListener('resize', resize);
+
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){ e.isIntersecting ? start() : stop(); });
+    }, { threshold: 0.15 }).observe(root);
+  }
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden) stop();
+    else if(onScreen()) start();
+  });
+
+  function init(){
+    resize();
+    if(reduce){ drawStatic(); return; }
+    if(onScreen()) start();
+  }
+  if(document.readyState === 'complete') init();
+  else window.addEventListener('load', init);
+  if(photo && !photo.complete) photo.addEventListener('load', resize, { once: true });
+})();
 </script>
 
 </body>
